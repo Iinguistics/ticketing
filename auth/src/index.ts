@@ -4,7 +4,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 
 import { errorHandler } from './middlewares/errorHandler';
-import { NotFoundError } from './errors/NotFoundError';
+import { NotFoundError } from './errors';
 import routes from './routes';
 
 const app = express();
