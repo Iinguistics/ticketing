@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
+import { DatabaseConnectionError } from '../errors/DatabaseConnectionError';
+import { RequestValidationError } from '../errors/RequestValidationError';
 import prefix from './prefix';
 
 const router = express.Router();
@@ -17,12 +19,12 @@ router.post(
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			return res.status(400).send(errors.array());
+			throw new RequestValidationError(errors.array());
 		}
 
-		const { email, password } = req.body;
-
-		res.send({})
+		console.log('Creating user...');
+		
+		res.send({});
 	}
 );
 
