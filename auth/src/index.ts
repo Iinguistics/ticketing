@@ -1,3 +1,4 @@
+import cookieSession from 'cookie-session';
 import express from 'express';
 import mongoose from 'mongoose';
 import 'express-async-errors';
@@ -9,7 +10,14 @@ import routes from './routes';
 
 const app = express();
 
+app.set('trust proxy', true);
 app.use(json());
+app.use(
+	cookieSession({
+		signed: false,
+		secure: true,
+	})
+);
 
 routes.forEach((route) => {
 	app.use(route);
@@ -25,7 +33,7 @@ const start = async () => {
 	try {
 		await mongoose.connect('mongodb://auth-mongo-srv:27017/ticketing_auth');
 
-		console.log('Connected to mongodb')
+		console.log('Connected to mongodb');
 	} catch (error) {
 		console.error(error);
 	}
