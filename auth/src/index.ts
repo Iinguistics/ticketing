@@ -6,6 +6,7 @@ import { json } from 'body-parser';
 
 import { errorHandler } from './middlewares/errorHandler';
 import { NotFoundError } from './errors';
+import checkEnvVars from './helpers/checkEnvVars';
 import routes from './routes';
 
 const app = express();
@@ -30,6 +31,8 @@ app.all('*', async (req, res) => {
 app.use(errorHandler);
 
 const start = async () => {
+	checkEnvVars();
+
 	try {
 		await mongoose.connect('mongodb://auth-mongo-srv:27017/ticketing_auth');
 

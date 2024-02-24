@@ -40,7 +40,8 @@ router.post(
 				userId: user.id,
 				userEmail: user.email,
 			},
-			'abc'
+			// ! for ts error, checked in index
+			process.env.JWT_KEY!
 		);
 
 		req.session = {
