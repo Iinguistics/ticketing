@@ -1,0 +1,31 @@
+import cookieSession from 'cookie-session';
+import express from 'express';
+import 'express-async-errors';
+import { json } from 'body-parser';
+
+import errorHandler from './middlewares/errorHandler';
+import { NotFoundError } from './errors';
+import routes from './routes';
+
+const app = express();
+
+app.set('trust proxy', true);
+app.use(json());
+app.use(
+	cookieSession({
+		signed: false,
+		secure: true,
+	})
+);
+
+routes.forEach((route) => {
+	app.use(route);
+});
+
+app.all('*', async (req, res) => {
+	throw new NotFoundError();
+});
+
+app.use(errorHandler);
+
+export { app };
