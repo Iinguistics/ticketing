@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import { app } from './app';
+import app  from './app';
 import checkEnvVars from './helpers/checkEnvVars';
+import mongoose from 'mongoose';
 
 const start = async () => {
 	checkEnvVars();
