@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import 'express-async-errors';
 import { json } from 'body-parser';
 
-import { errorHandler } from './middlewares/errorHandler';
+import errorHandler from './middlewares/errorHandler';
 import { NotFoundError } from './errors';
 import checkEnvVars from './helpers/checkEnvVars';
 import routes from './routes';
