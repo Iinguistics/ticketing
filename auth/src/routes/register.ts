@@ -33,8 +33,8 @@ router.post(
 
 		const userJwt = jwt.sign(
 			{
-				userId: user.id,
-				userEmail: user.email,
+				id: user.id,
+				email: user.email,
 			},
 			// ! for ts error, checked in index
 			process.env.JWT_KEY!
