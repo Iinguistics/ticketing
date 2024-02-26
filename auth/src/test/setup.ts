@@ -1,5 +1,4 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import app from '../app';
 import mongoose from 'mongoose';
 
 let mongo: any;
