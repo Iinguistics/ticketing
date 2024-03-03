@@ -3,8 +3,7 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 
-import errorHandler from './middlewares/errorHandler';
-import { NotFoundError } from './errors';
+import { errorHandler, NotFoundError } from '@jmsgoytia-ticketing/common';
 import routes from './routes';
 
 const app = express();

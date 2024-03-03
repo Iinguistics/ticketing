@@ -1,4 +1,4 @@
-import currentUser from '../middlewares/currentUser';
+import { currentUser } from '@jmsgoytia-ticketing/common';
 import express from 'express';
 import prefix from './prefix';
 

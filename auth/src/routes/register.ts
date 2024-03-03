@@ -1,10 +1,9 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { BadRequestError } from '../errors';
+import { BadRequestError, validateRequest } from '@jmsgoytia-ticketing/common';
 import { User } from '../models/user';
 import jwt from 'jsonwebtoken';
 import prefix from './prefix';
-import validateRequest from '../middlewares/validateRequest';
 
 const router = express.Router();
 
