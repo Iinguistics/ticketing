@@ -23,6 +23,14 @@ class UserRepository {
 		return this.#asEntity(document);
 	}
 
+	async create(email: string, password: string) {
+		const user = User.build({ email, password });
+
+		await user.save();
+
+		return this.#asEntity(user);
+	}
+
 	#asEntity(document: UserDocument) {
 		return this.#userFactory.reconstitute(document);
 	}
