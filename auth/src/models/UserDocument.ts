@@ -6,6 +6,7 @@ export interface UserDocument extends mongoose.Document {
 	created_at: Date;
 	deleted_at: Date | null;
 	email: string;
+	id: string;
 	last_logged_in_at: Date | null;
 	modified_at: Date;
 	password: string;
