@@ -1,5 +1,6 @@
 import { User } from '../models/user';
 import { UserDocument } from '../models/UserDocument';
+import Email from '../ValueObjects/Email';
 import UserFactory from '../Factories/UserFactory';
 
 class UserRepository {
@@ -9,10 +10,10 @@ class UserRepository {
 		this.#userFactory = UserFactory;
 	}
 
-	async getByEmail(email: string) {
+	async getByEmail(email: Email) {
 		const document = await User.findOne({
 			active: { $eq: true },
-			email: { $eq: email },
+			email: { $eq: email.value },
 			deleted_at: { $eq: null },
 		});
 
@@ -23,8 +24,8 @@ class UserRepository {
 		return this.#asEntity(document);
 	}
 
-	async create(email: string, password: string) {
-		const user = User.build({ email, password });
+	async create(email: Email, password: string) {
+		const user = User.build({ email: email.value, password });
 
 		await user.save();
 

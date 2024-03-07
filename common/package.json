@@ -1,6 +1,6 @@
 {
   "name": "@jmsgoytia-ticketing/common",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
     "del-cli": "^5.1.0",
     "typescript": "^5.3.3"
   },
@@ -25,6 +26,7 @@
     "cookie-session": "^2.1.0",
     "express": "^4.18.3",
     "express-validator": "^7.0.1",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21"
   }
 }

@@ -4,6 +4,7 @@ import { BadRequestError, validateRequest } from '@jmsgoytia-ticketing/common';
 import { User } from '../models/user';
 import jwt from 'jsonwebtoken';
 import prefix from './prefix';
+import RegisterRequest from '../UseCases/Register/RegisterRequest';
 
 const router = express.Router();
 
