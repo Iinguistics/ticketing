@@ -4,8 +4,8 @@ import HttpPresenter from './Presenter';
 
 class OkHttpPresenter extends HttpPresenter {
 	presentResponse(response: object) {;
-		httpResponse.status(200).json(camelToSnake(response));
+		return httpResponse.status(200).json(camelToSnake(response));
 	}
 }
 
-module.exports = OkHttpPresenter;
+export default OkHttpPresenter;
