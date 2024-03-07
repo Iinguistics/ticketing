@@ -1,19 +1,18 @@
+import { BadRequestError } from '@jmsgoytia-ticketing/common';
+import Presenter from "../Presenters/Presenter";
+
 abstract class Interactor {
 		#presenter;
 
-	/**
-	 * Create an Interactor.
-	 * @param {Dependencies<Response>} dependencies
-	 */
-	constructor(dependencies) {
-		this.#presenter = dependencies.presenter;
+	constructor(presenter: Presenter) {
+		this.#presenter = presenter;
 	}
 
 	async execute(request: object) {
 		try {
 			await this.#handleRequest(request);
 		} catch (exception) {
-			this.#handleException(exception);
+			throw new BadRequestError('A unexpected error has occurred');
 		}
 	}
 
@@ -22,16 +21,6 @@ abstract class Interactor {
 	async #handleRequest(request: object) {
 		const response = await this._execute(request);
 		this.#presenter.presentResponse(response);
-	}
-
-	/** @param {unknown} exception */
-	#handleException(exception) {
-		const error =
-			exception instanceof Error
-				? exception
-				: new Error('An unexpected error has occurred.');
-
-		this.#presenter.presentError(error);
 	}
 }
 
