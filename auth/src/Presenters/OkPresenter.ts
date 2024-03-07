@@ -8,4 +8,4 @@ class OkHttpPresenter extends HttpPresenter {
 	}
 }
 
-export default OkHttpPresenter;
+export default new OkHttpPresenter();

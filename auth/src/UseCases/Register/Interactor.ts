@@ -2,11 +2,16 @@ import { BadRequestError } from '@jmsgoytia-ticketing/common';
 import Email from '../../ValueObjects/Email';
 import Interactor from '../../UseCase/Interactor';
 import jwt from 'jsonwebtoken';
+import OkHttpPresenter from '../../Presenters/OkPresenter';
 import RegisterRequest from './RegisterRequest';
 import UserRepository from '../../Repositories/UserRepository';
 
 class RegisterInteractor extends Interactor {
 	#userRepository = UserRepository;
+
+	constructor() {
+		super(OkHttpPresenter);
+	}
 
 	async _execute(req: RegisterRequest) {
 		const email = new Email(req.email);

@@ -1,8 +1,8 @@
 import { BadRequestError } from '@jmsgoytia-ticketing/common';
-import Presenter from "../Presenters/Presenter";
+import Presenter from '../Presenters/Presenter';
 
 abstract class Interactor {
-		#presenter;
+	#presenter;
 
 	constructor(presenter: Presenter) {
 		this.#presenter = presenter;
