@@ -1,9 +1,6 @@
-import { Request } from "express";
-
-type RegisterRequest = {
-	readonly email: string;
-	readonly password: string;
-	session: Request['session'];
-};
+type RegisterRequest = Readonly<{
+	email: string;
+	password: string;
+}>;
 
 export default RegisterRequest;

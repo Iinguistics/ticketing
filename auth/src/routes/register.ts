@@ -1,10 +1,8 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { BadRequestError, validateRequest } from '@jmsgoytia-ticketing/common';
-import { User } from '../models/user';
-import jwt from 'jsonwebtoken';
+import { validateRequest } from '@jmsgoytia-ticketing/common';
 import prefix from './prefix';
-import RegisterRequest from '../UseCases/Register/RegisterRequest';
+import RegisterController from '../Controllers/RegisterController';
 
 const router = express.Router();
 
@@ -19,32 +17,7 @@ router.post(
 	],
 	validateRequest,
 	async (req: Request, res: Response) => {
-		const { email, password } = req.body;
-
-		const existingUser = await User.findOne({ email });
-
-		if (existingUser) {
-			throw new BadRequestError(`Email: ${email} already in use`);
-		}
-
-		const user = User.build({ email, password });
-
-		await user.save();
-
-		const userJwt = jwt.sign(
-			{
-				id: user.id,
-				email: user.email,
-			},
-			// ! for ts error, checked in index
-			process.env.JWT_KEY!
-		);
-
-		req.session = {
-			jwt: userJwt,
-		};
-
-		res.status(201).send(user);
+		return RegisterController.handle(req);
 	}
 );
 

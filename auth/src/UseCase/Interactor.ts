@@ -20,7 +20,7 @@ abstract class Interactor {
 
 	async #handleRequest(request: object) {
 		const response = await this._execute(request);
-		this.#presenter.presentResponse(response);
+		return this.#presenter.presentResponse(response);
 	}
 }
 

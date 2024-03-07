@@ -1,4 +1,4 @@
-import { Request, response } from 'express';
+import { Request } from 'express';
 import Controller from "./Controller";
 import Interactor from '../UseCases/Register/Interactor';
 import RegisterRequest from '../UseCases/Register/RegisterRequest';
@@ -12,7 +12,8 @@ class RegisterController extends Controller {
 		return {
 			email: req.body.email,
 			password: req.body.password,
-			session: req.session,
 		};
 	};
 }
+
+export default new RegisterController();
