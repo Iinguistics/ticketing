@@ -5,6 +5,7 @@ import Interactor from '../../UseCase/Interactor';
 import jwt from 'jsonwebtoken';
 import OkHttpPresenter from '../../Presenters/OkPresenter';
 import RegisterRequest from './RegisterRequest';
+import RegisterResponse from './RegisterResponse';
 import UserRepository from '../../Repositories/UserRepository';
 
 class RegisterInteractor extends Interactor {
@@ -14,7 +15,10 @@ class RegisterInteractor extends Interactor {
 		super(OkHttpPresenter);
 	}
 
-	async _execute(req: RegisterRequest, httpRequest: Request) {
+	async _execute(
+		req: RegisterRequest,
+		httpRequest: Request
+	): Promise<RegisterResponse> {
 		const email = new Email(req.email);
 
 		await this.#checkExistingUser(email);
@@ -34,7 +38,10 @@ class RegisterInteractor extends Interactor {
 			jwt: userJwt,
 		};
 
-		return { user };
+		return {
+			email: user.email.value,
+			id: user.id.value,
+		};
 	}
 
 	async #checkExistingUser(email: Email): Promise<void> {
