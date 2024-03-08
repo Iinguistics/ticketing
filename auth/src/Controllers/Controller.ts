@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import Interactor from '../UseCase/Interactor';
 
 abstract class Controller {
@@ -8,9 +8,9 @@ abstract class Controller {
 		this.#interactor = interactor;
 	}
 
-	handle(httpRequest: Request) {
+	handle(httpRequest: Request, httpResponse: Response) {
 		const request = this._mapToUseCaseRequest(httpRequest);
-		this.#interactor.execute(request);
+		this.#interactor.execute(request, httpRequest, httpResponse);
 	}
 
 	abstract _mapToUseCaseRequest(httpRequest: Request): object;

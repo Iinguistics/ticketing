@@ -19,7 +19,7 @@ it('returns a 400 with non matching password', async () => {
 			email: 'test@test.com',
 			password: 'password',
 		})
-		.expect(201);
+		.expect(200);
 
 	await request(app)
 		.post(`${prefix}/users/login`)
@@ -37,7 +37,7 @@ it('returns a 200 on successful login and sets cookie in header', async () => {
 			email: 'test@test.com',
 			password: 'password',
 		})
-		.expect(201);
+		.expect(200);
 
 	const response = await request(app)
 		.post(`${prefix}/users/login`)

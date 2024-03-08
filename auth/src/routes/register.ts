@@ -17,7 +17,7 @@ router.post(
 	],
 	validateRequest,
 	async (req: Request, res: Response) => {
-		return RegisterController.handle(req);
+		return RegisterController.handle(req, res);
 	}
 );
 

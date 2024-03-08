@@ -1,5 +1,5 @@
 import { BadRequestError } from '@jmsgoytia-ticketing/common';
-import { request } from 'express';
+import { Request } from 'express';
 import Email from '../../ValueObjects/Email';
 import Interactor from '../../UseCase/Interactor';
 import jwt from 'jsonwebtoken';
@@ -14,7 +14,7 @@ class RegisterInteractor extends Interactor {
 		super(OkHttpPresenter);
 	}
 
-	async _execute(req: RegisterRequest) {
+	async _execute(req: RegisterRequest, httpRequest: Request) {
 		const email = new Email(req.email);
 
 		await this.#checkExistingUser(email);
@@ -30,7 +30,7 @@ class RegisterInteractor extends Interactor {
 			process.env.JWT_KEY!
 		);
 
-		request.session = {
+		httpRequest.session = {
 			jwt: userJwt,
 		};
 
