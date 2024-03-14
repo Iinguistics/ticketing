@@ -35,6 +35,20 @@ class UserRepository {
 	#asEntity(document: UserDocument) {
 		return this.#userFactory.reconstitute(document);
 	}
+
+	async getDocumentByEmail(email: Email) {
+		const document = await User.findOne({
+			active: { $eq: true },
+			email: { $eq: email.value },
+			deleted_at: { $eq: null },
+		});
+
+		if (!document) {
+			return null;
+		}
+
+		return document;
+	}
 }
 
 export default new UserRepository();
