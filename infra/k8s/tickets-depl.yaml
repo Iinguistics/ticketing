@@ -16,6 +16,8 @@ spec:
         - name: tickets
           image: jmsgoytia/ticketing-tickets
           env:
+            - name: MONGO_URI
+              value: 'mongodb://tickets-mongo-srv:27017/ticketing_tickets'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

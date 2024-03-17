@@ -1,4 +1,4 @@
-const keyList = ['JWT_KEY'];
+const keyList = ['JWT_KEY' ,'MONGO_URI'];
 
 const checkEnvVars = () => {
 	keyList.forEach((key) => {

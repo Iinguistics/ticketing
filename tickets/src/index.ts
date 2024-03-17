@@ -6,7 +6,7 @@ const start = async () => {
 	checkEnvVars();
 
 	try {
-		await mongoose.connect('mongodb://tickets-mongo-srv:27017/ticketing_tickets');
+		await mongoose.connect(process.env.MONGO_URI!);
 
 		console.log('Connected to mongodb');
 	} catch (error) {
