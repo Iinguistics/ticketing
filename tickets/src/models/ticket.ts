@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 interface TicketAttrs {
 	price: number;
 	title: string;
-	userId: string;
+	user_id: string;
 }
 
 interface TicketModel extends mongoose.Model<TicketDocument> {

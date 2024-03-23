@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
+import { Ticket } from '../models/ticket';
 import { requireAuth, validateRequest } from '@jmsgoytia-ticketing/common';
 // import LoginController from '../Controllers/LoginController';
 import prefix from './prefix';
@@ -16,7 +17,13 @@ router.post(
 	validateRequest,
 	async (req: Request, res: Response) => {
 		// return LoginController.handle(req, res);
-		res.sendStatus(200);
+		const { price, title } = req.body;
+		// checked in requireAuth
+		const userId = req.currentUser!.id;
+
+		const ticket = Ticket.build({ price, title, user_id: userId });
+		await ticket.save();
+		res.status(200).send(ticket);
 	}
 );
 
