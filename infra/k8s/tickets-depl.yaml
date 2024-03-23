@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: tickets
-          image: jmsgoytia/ticketing-tickets
+          image: jamesgoytia/ticketing-tickets
           env:
             - name: MONGO_URI
               value: 'mongodb://tickets-mongo-srv:27017/ticketing_tickets'
