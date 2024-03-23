@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import { requireAuth, validateRequest } from '@jmsgoytia-ticketing/common';
-// import LoginController from '../Controllers/LoginController';
+// import CreateController from '../Controllers/CreateController';
 import prefix from './prefix';
 
 const router = express.Router();
@@ -16,7 +16,7 @@ router.post(
 	],
 	validateRequest,
 	async (req: Request, res: Response) => {
-		// return LoginController.handle(req, res);
+		// return CreateController.handle(req, res);
 		const { price, title } = req.body;
 		// checked in requireAuth
 		const userId = req.currentUser!.id;
