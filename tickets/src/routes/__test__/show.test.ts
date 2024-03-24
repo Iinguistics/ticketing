@@ -1,4 +1,5 @@
 import app from '../../app';
+import createObjectId from '../../test/createObjectId';
 import prefix from '../prefix';
 import request from 'supertest';
 
@@ -7,6 +8,13 @@ const title = 'techspo';
 
 it('can only be accessed if the user is logged in', async () => {
 	await request(app).get(`${prefix}/tickets/abc`).expect(401);
+});
+
+it('returns a 404 if ticket is not found', async () => {
+	await request(app)
+		.get(`${prefix}/tickets/${createObjectId()}`)
+		.set('Cookie', global.login())
+		.expect(404);
 });
 
 it('returns the ticket by id', async () => {
