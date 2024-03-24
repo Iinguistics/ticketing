@@ -7,7 +7,9 @@ const price = 20;
 const title = 'techspo';
 
 it('can only be accessed if the user is logged in', async () => {
-	await request(app).get(`${prefix}/tickets/abc`).expect(401);
+	await request(app)
+		.get(`${prefix}/tickets/${createObjectId()}`)
+		.expect(401);
 });
 
 it('returns a 404 if ticket is not found', async () => {
