@@ -1,6 +1,6 @@
 {
   "name": "@jmsgoytia-ticketing/common",
-  "version": "1.0.5",
+  "version": "1.0.18",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -10,7 +10,7 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "del ./build/*",
-    "publish": "npm version patch && npm run build && npm publish"
+    "publish": "git add . && git commit -m \"Updates common version\" && npm version patch && npm run build && npm publish"
   },
   "keywords": [],
   "author": "",
