@@ -1,6 +1,6 @@
+import { Id } from '@jmsgoytia-ticketing/common'
 import { UserDocument } from '../models/UserDocument';
 import Email from '../ValueObjects/Email';
-import Id from '../ValueObjects/Id';
 import User from '../Entities/User';
 
 class UserFactory {

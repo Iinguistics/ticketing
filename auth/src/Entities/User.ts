@@ -1,5 +1,5 @@
+import { Id } from '@jmsgoytia-ticketing/common'
 import Email from "../ValueObjects/Email";
-import Id from "../ValueObjects/Id";
 
 type Properties = {
 	active: boolean;
