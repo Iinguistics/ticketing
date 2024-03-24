@@ -1,5 +1,7 @@
-const { ObjectId } = require('mongoose');
+const mongoose = require('mongoose');
 
+//TODO: abstract out to common module
+//TODO: add script to common for publishing
 class Id {
 	value;
 	constructor(value: string) {
@@ -12,7 +14,7 @@ class Id {
 	}
 
 	toObjectId() {
-		return new ObjectId(this.value);
+		return new mongoose.Types.ObjectId(this.value)
 	}
 }
 
