@@ -6,16 +6,11 @@ import request from 'supertest';
 const price = 20;
 const title = 'techspo';
 
-it('can only be accessed if the user is logged in', async () => {
-	await request(app)
-		.get(`${prefix}/tickets/${createObjectId()}`)
-		.expect(401);
-});
-
 it('returns a 404 if ticket is not found', async () => {
 	await request(app)
 		.get(`${prefix}/tickets/${createObjectId()}`)
 		.set('Cookie', global.login())
+		.send()
 		.expect(404);
 });
 
@@ -31,6 +26,7 @@ it('returns the ticket by id', async () => {
 	const ticket = await request(app)
 		.get(`${prefix}/tickets/${ticketId}`)
 		.set('Cookie', global.login())
+		.send()
 		.expect(200);
 
 	expect(ticket.body.id).toEqual(ticketId);

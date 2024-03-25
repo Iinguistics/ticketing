@@ -1,4 +1,5 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import createObjectId from './createObjectId';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
@@ -33,9 +34,8 @@ afterAll(async () => {
 });
 
 global.login = () => {
-  // Build a JWT payload.  { id, email }
   const payload = {
-    id: '1lk24j124l',
+    id:  createObjectId(),
     email: 'test@test.com'
   };
 

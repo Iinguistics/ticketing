@@ -1,8 +1,6 @@
 import express, { Request, Response } from 'express';
 import { Ticket } from '../models/ticket';
 import {
-	requireAuth,
-	validateRequest,
 	NotFoundError,
 } from '@jmsgoytia-ticketing/common';
 // import ShowController from '../Controllers/ShowController';
@@ -13,8 +11,6 @@ const router = express.Router();
 
 router.get(
 	`${prefix}/tickets/:id`,
-	requireAuth,
-	validateRequest,
 	async (req: Request, res: Response) => {
 		// return ShowController.handle(req, res);
 		const { id } = req.params;
