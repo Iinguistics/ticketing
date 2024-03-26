@@ -24,10 +24,10 @@ build:
           - src: '**/*.js'
             dest: .
     - image: jamesgoytia/ticketing-tickets
-          context: tickets
-          docker:
-            dockerfile: Dockerfile
-          sync:
-            manual:
-              - src: 'src/**/*.ts'
-                dest: .
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
