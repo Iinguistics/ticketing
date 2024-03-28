@@ -1,7 +1,7 @@
 import { TicketDocument } from './TicketDocument';
 import mongoose from 'mongoose';
 
-interface TicketAttrs {
+export interface TicketAttrs {
 	price: number;
 	title: string;
 	user_id: string;
