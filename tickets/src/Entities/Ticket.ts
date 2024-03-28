@@ -1,13 +1,4 @@
-import { Id } from '@jmsgoytia-ticketing/common';
-
-type Properties = {
-	createdAt: Date;
-	deletedAt: Date | null;
-	id: Id;
-	price: number;
-	title: string;
-	userId: Id;
-};
+import Properties from './Properties';
 
 class Ticket {
 	#createdAt;
