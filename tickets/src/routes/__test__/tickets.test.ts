@@ -9,7 +9,6 @@ it('can fetch a list of tickets', async () => {
 
 	const response = await request(app).get(`${prefix}/tickets`).expect(200);
 
-	// TODO: tickets not showing as a list
-	// expect(response.body.tickets.length).toEqual(2);
+	expect(response.body.tickets.length).toEqual(2);
 	expect(response.body.total).toEqual(2);
 });
