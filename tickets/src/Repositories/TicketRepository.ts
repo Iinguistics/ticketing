@@ -1,3 +1,4 @@
+import { Id } from '@jmsgoytia-ticketing/common';
 import { Ticket } from '../models/ticket';
 import { TicketDocument } from '../models/TicketDocument';
 import { TicketAttrs } from '../models/ticket';
@@ -34,6 +35,19 @@ class TicketRepository extends Repository {
 		return Ticket.countDocuments({
 			...TicketRepository._scope('notDeleted'),
 		});
+	}
+
+	async getById(id: Id): Promise<TicketEntity | null> {
+		const ticket = await Ticket.findOne({
+			_id: { $eq: id.toObjectId() },
+			...TicketRepository._scope('notDeleted'),
+		});
+
+		if(!ticket){
+			return null;
+		}
+
+		return this.#asEntity(ticket)
 	}
 
 	async create(attrs: TicketAttrs) {

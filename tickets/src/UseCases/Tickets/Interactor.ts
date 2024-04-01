@@ -1,4 +1,4 @@
-import { Ticket } from './TicketsResponse';
+import Ticket from '../../types/Ticket';
 import TicketEntity from '../../Entities/Ticket';
 import TicketsRequest from './TicketsRequest';
 import TicketsResponse from './TicketsResponse';

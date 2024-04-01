@@ -1,30 +1,23 @@
 import express, { Request, Response } from 'express';
-import { Ticket } from '../models/ticket';
-import {
-	NotFoundError,
-} from '@jmsgoytia-ticketing/common';
-// import ShowController from '../Controllers/ShowController';
-const mongoose = require('mongoose');
+import { validateRequest } from '@jmsgoytia-ticketing/common';
+import { param } from 'express-validator';
 import prefix from './prefix';
+import ShowController from '../Controllers/ShowController';
 
 const router = express.Router();
 
 router.get(
 	`${prefix}/tickets/:id`,
+	[
+		param('id')
+			.notEmpty()
+			.withMessage('id is required')
+			.isMongoId()
+			.withMessage('id must be a valid ObjectId'),
+	],
+	validateRequest,
 	async (req: Request, res: Response) => {
-		// return ShowController.handle(req, res);
-		const { id } = req.params;
-
-		const ticket = await Ticket.findOne({
-			_id: { $eq: new mongoose.Types.ObjectId(id) },
-			deleted_at: { $eq: null },
-		});
-
-		if (!ticket) {
-			throw new NotFoundError();
-		}
-
-		res.send(ticket);
+		return ShowController.handle(req, res);
 	}
 );
 

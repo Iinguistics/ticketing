@@ -6,6 +6,14 @@ import request from 'supertest';
 const price = 20;
 const title = 'techspo';
 
+it('returns a 400 if the ticket id is not a valid ObjectId', async () => {
+	await request(app)
+		.get(`${prefix}/tickets/${createObjectId()}abc`)
+		.set('Cookie', global.login())
+		.send()
+		.expect(400);
+});
+
 it('returns a 404 if ticket is not found', async () => {
 	await request(app)
 		.get(`${prefix}/tickets/${createObjectId()}`)
@@ -29,7 +37,7 @@ it('returns the ticket by id', async () => {
 		.send()
 		.expect(200);
 
-	expect(ticket.body.id).toEqual(ticketId);
-	expect(ticket.body.price).toEqual(price);
-	expect(ticket.body.title).toEqual(title);
+	expect(ticket.body.ticket.id).toEqual(ticketId);
+	expect(ticket.body.ticket.price).toEqual(price);
+	expect(ticket.body.ticket.title).toEqual(title);
 });

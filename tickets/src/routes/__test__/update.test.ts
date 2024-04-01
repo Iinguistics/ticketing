@@ -71,6 +71,6 @@ it('updates the ticket when provided valid inputs', async () => {
 		.get(`${prefix}/tickets/${ticketId}`)
 		.send();
 
-	expect(ticketResponse.body.price).toEqual(30);
-	expect(ticketResponse.body.title).toEqual('new title');
+	expect(ticketResponse.body.ticket.price).toEqual(30);
+	expect(ticketResponse.body.ticket.title).toEqual('new title');
 });
