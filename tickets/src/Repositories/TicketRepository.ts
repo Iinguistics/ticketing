@@ -18,10 +18,10 @@ class TicketRepository extends Repository {
 		pagination: Pagination | undefined = { limit: 100, offset: 0, page: 1 }
 	): Promise<TicketEntity[]> {
 		const tickets = await Ticket.find({
-			...TicketRepository.scope('notDeleted'),
+			...TicketRepository._scope('notDeleted'),
 		})
 			.limit(pagination.limit)
-			.skip(this._calcSkip(pagination));
+			.skip(TicketRepository._calcSkip(pagination));
 
 		if (!tickets.length) {
 			return [];
@@ -32,7 +32,7 @@ class TicketRepository extends Repository {
 
 	async countAll(): Promise<number> {
 		return Ticket.countDocuments({
-			...TicketRepository.scope('notDeleted'),
+			...TicketRepository._scope('notDeleted'),
 		});
 	}
 

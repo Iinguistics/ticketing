@@ -19,11 +19,11 @@ class Repository {
 		},
 	};
 
-	static scope(key: ScopeKey) {
+	static _scope(key: ScopeKey) {
 		return Repository.#scopes[key] ?? {};
 	}
 
-	_calcSkip(pagination: Pagination) {
+	static _calcSkip(pagination: Pagination) {
 		return Math.max(
 			pagination.limit * (pagination.page - 1) + pagination.offset,
 			0
