@@ -1,14 +1,39 @@
 import { Ticket } from '../models/ticket';
 import { TicketDocument } from '../models/TicketDocument';
 import { TicketAttrs } from '../models/ticket';
+import Pagination from './Pagination';
+import Repository from './Repository';
 import TicketEntity from '../Entities/Ticket';
 import TicketFactory from '../Factories/TicketFactory';
 
-class TicketRepository {
+class TicketRepository extends Repository {
 	#ticketFactory;
 
 	constructor() {
+		super();
 		this.#ticketFactory = TicketFactory;
+	}
+
+	async getAll(
+		pagination: Pagination | undefined = { limit: 100, offset: 0, page: 1 }
+	): Promise<TicketEntity[]> {
+		const tickets = await Ticket.find({
+			...TicketRepository.scope('notDeleted'),
+		})
+			.limit(pagination.limit)
+			.skip(this._calcSkip(pagination));
+
+		if (!tickets.length) {
+			return [];
+		}
+
+		return tickets.map((ticket) => this.#asEntity(ticket));
+	}
+
+	async countAll(): Promise<number> {
+		return Ticket.countDocuments({
+			...TicketRepository.scope('notDeleted'),
+		});
 	}
 
 	async create(attrs: TicketAttrs) {
