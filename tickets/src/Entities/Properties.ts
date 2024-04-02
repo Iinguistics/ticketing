@@ -1,4 +1,9 @@
 import { Id } from '@jmsgoytia-ticketing/common';
+import Listener from '@jmsgoytia-ticketing/common'
+
+class Test extends Listener {
+	
+}
 
 type Properties = Readonly<{
 	createdAt: Date;

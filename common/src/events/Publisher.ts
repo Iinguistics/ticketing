@@ -1,12 +1,12 @@
 import { Stan } from 'node-nats-streaming';
-import Subjects from './Subjects';
+import { Subjects } from './Subjects';
 
 interface Event {
 	subject: Subjects;
 	data: any;
 }
 
-abstract class Publisher<T extends Event> {
+export abstract class Publisher<T extends Event> {
 	abstract subject: T['subject'];
 	#client: Stan;
 
@@ -30,5 +30,3 @@ abstract class Publisher<T extends Event> {
 		});
 	}
 }
-
-export default Publisher;

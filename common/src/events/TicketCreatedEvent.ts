@@ -1,6 +1,6 @@
-import Subjects from './Subjects';
+import { Subjects } from './Subjects';
 
-interface TicketCreatedEvent {
+export interface TicketCreatedEvent {
 	data: {
 		id: string;
 		price: number;
@@ -9,5 +9,3 @@ interface TicketCreatedEvent {
 	};
 	subject: Subjects.TicketCreated;
 }
-
-export default TicketCreatedEvent;
