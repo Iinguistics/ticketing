@@ -8,3 +8,5 @@ export * from './middlewares/validateRequest';
 export * from './utils/camelToSnake';
 
 export * from './ValueObjects';
+
+export * from './events';
