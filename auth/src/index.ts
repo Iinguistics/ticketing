@@ -1,9 +1,10 @@
+import { checkEnvVars } from '@jmsgoytia-ticketing/common'
+import { envKeyList } from './local/config';
 import app  from './app';
-import checkEnvVars from './helpers/checkEnvVars';
 import mongoose from 'mongoose';
 
 const start = async () => {
-	checkEnvVars();
+	checkEnvVars(envKeyList);
 
 	try {
 		await mongoose.connect(process.env.MONGO_URI!);

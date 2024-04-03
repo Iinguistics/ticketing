@@ -1,0 +1,1 @@
+export const envKeyList = ['JWT_KEY', 'MONGO_URI'];
