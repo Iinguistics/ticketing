@@ -1,3 +1,4 @@
+import { natsWrapper } from '../../NatsWrapper';
 import app from '../../app';
 import createObjectId from '../../test/createObjectId';
 import createTicket from '../../test/createTicket';
@@ -73,4 +74,5 @@ it('updates the ticket when provided valid inputs', async () => {
 
 	expect(ticketResponse.body.ticket.price).toEqual(30);
 	expect(ticketResponse.body.ticket.title).toEqual('new title');
+	expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

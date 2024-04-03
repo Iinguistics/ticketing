@@ -3,7 +3,7 @@ import CreateRequest from './CreateRequest';
 import CreateResponse from './CreateResponse';
 import Interactor from '../../UseCase/Interactor';
 import OkHttpPresenter from '../../Presenters/OkPresenter';
-import TicketCreatedPublisher from '../../events/publishers/ticketCreatedPublisher';
+import TicketCreatedPublisher from '../../events/publishers/TicketCreatedPublisher';
 import TicketRepository from '../../Repositories/TicketRepository';
 
 class CreateInteractor extends Interactor {
