@@ -1,3 +1,4 @@
-import { camelToSnake } from './camelToSnake';
+import camelToSnake from './camelToSnake';
+import checkEnvVars from './checkEnvVars';
 
-export { camelToSnake };
+export { camelToSnake, checkEnvVars };

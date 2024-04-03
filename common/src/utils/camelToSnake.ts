@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export const camelToSnake = (obj: any): { [key: string]: any } => {
+const camelToSnake = (obj: any): { [key: string]: any } => {
 	if (typeof obj !== 'object' || obj === null) {
 		return obj;
 	}
@@ -15,3 +15,5 @@ export const camelToSnake = (obj: any): { [key: string]: any } => {
 		Array.isArray(obj) ? [] : {}
 	);
 };
+
+export default camelToSnake;

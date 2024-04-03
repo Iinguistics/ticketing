@@ -1,6 +1,6 @@
+import { checkEnvVars } from '@jmsgoytia-ticketing/common'
 import { natsWrapper } from './NatsWrapper';
 import app from './app';
-import checkEnvVars from './helpers/checkEnvVars';
 import mongoose from 'mongoose';
 
 const start = async () => {
