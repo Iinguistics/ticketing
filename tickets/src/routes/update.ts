@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
+import { natsWrapper } from '../NatsWrapper';
 import { Ticket } from '../models/ticket';
 import {
 	requireAuth,
@@ -8,6 +9,7 @@ import {
 	NotFoundError,
 } from '@jmsgoytia-ticketing/common';
 // import UpdateController from '../Controllers/UpdateController';
+import TicketUpdatedPublisher from '../events/publishers/TicketUpdatedPublisher';
 const mongoose = require('mongoose');
 import prefix from './prefix';
 
@@ -44,6 +46,13 @@ router.put(
 		});
 
 		await ticket.save();
+
+		new TicketUpdatedPublisher(natsWrapper.client).publish({
+			id: ticket.id,
+			price: ticket.price,
+			title: ticket.title,
+			userId: ticket.user_id,
+		});
 
 		res.send(ticket);
 	}
