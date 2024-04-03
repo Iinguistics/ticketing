@@ -1,4 +1,10 @@
-const keyList = ['JWT_KEY' ,'MONGO_URI'];
+const keyList = [
+	'JWT_KEY',
+	'MONGO_URI',
+	'NATS_CLIENT_ID',
+	'NATS_CLUSTER_ID',
+	'NATS_URL',
+];
 
 const checkEnvVars = () => {
 	keyList.forEach((key) => {
@@ -10,4 +16,4 @@ const checkEnvVars = () => {
 	console.log('Env variables checked');
 };
 
-export default checkEnvVars
+export default checkEnvVars;

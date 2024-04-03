@@ -1,9 +1,6 @@
 import { Stan } from 'node-nats-streaming';
 import { Subjects } from './Subjects';
 
-//TODO: move nats wrapper to common & couple client here
-// removes the need to pass in client on every publish
-
 interface Event {
 	subject: Subjects;
 	data: any;

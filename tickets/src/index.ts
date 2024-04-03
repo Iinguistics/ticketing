@@ -7,7 +7,11 @@ const start = async () => {
 	checkEnvVars();
 
 	try {
-		await natsWrapper.connect('ticketing', 'abc', 'http://nats-srv:4222');
+		await natsWrapper.connect(
+			process.env.NATS_CLUSTER_ID!,
+			process.env.NATS_CLIENT_ID!,
+			process.env.NATS_URL!
+		);
 		natsWrapper.client.on('close', () => {
 			console.log('NATS conn closed');
 			process.exit();
