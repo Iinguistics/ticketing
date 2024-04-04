@@ -1,9 +1,7 @@
-import { Id } from '@jmsgoytia-ticketing/common';
+import { Id, Pagination, Repository } from '@jmsgoytia-ticketing/common';
 import { Ticket } from '../models/ticket';
 import { TicketDocument } from '../models/TicketDocument';
 import { TicketAttrs } from '../models/ticket';
-import Pagination from './Pagination';
-import Repository from './Repository';
 import TicketEntity from '../Entities/Ticket';
 import TicketFactory from '../Factories/TicketFactory';
 

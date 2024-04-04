@@ -1,3 +1,5 @@
+import Pagination from './Pagination';
 import Repository from './Repository';
+import ScopeKey from './ScopeKey';
 
-export { Repository };
+export { Pagination, ScopeKey, Repository };
