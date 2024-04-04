@@ -1,20 +1,21 @@
+import { Repository } from '@jmsgoytia-ticketing/common';
 import { User } from '../models/user';
 import { UserDocument } from '../models/UserDocument';
 import Email from '../ValueObjects/Email';
 import UserFactory from '../Factories/UserFactory';
 
-class UserRepository {
+class UserRepository extends Repository {
 	#userFactory;
 
 	constructor() {
+		super();
 		this.#userFactory = UserFactory;
 	}
 
 	async getByEmail(email: Email) {
 		const document = await User.findOne({
-			active: { $eq: true },
+			...UserRepository._scope('activeNotDeleted'),
 			email: { $eq: email.value },
-			deleted_at: { $eq: null },
 		});
 
 		if (!document) {
@@ -38,9 +39,8 @@ class UserRepository {
 
 	async getDocumentByEmail(email: Email) {
 		const document = await User.findOne({
-			active: { $eq: true },
+			...UserRepository._scope('activeNotDeleted'),
 			email: { $eq: email.value },
-			deleted_at: { $eq: null },
 		});
 
 		if (!document) {
