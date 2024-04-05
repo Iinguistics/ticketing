@@ -3,6 +3,8 @@ import { OrderStatus } from '@jmsgoytia-ticketing/common';
 import { TicketDocument } from './TicketDocument';
 import mongoose from 'mongoose';
 
+export { OrderStatus };
+
 export interface OrderAttrs {
 	expires_at: Date;
 	status: OrderStatus;

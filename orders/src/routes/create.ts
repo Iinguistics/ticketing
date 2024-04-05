@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validateRequest } from '@jmsgoytia-ticketing/common';
-// import CreateController from '../Controllers/CreateController';
+import CreateController from '../Controllers/CreateController';
 import prefix from './prefix';
 
 const router = express.Router();
@@ -18,7 +18,7 @@ router.post(
 	],
 	validateRequest,
 	async (req: Request, res: Response) => {
-		// return CreateController.handle(req, res);
+		return CreateController.handle(req, res);
 	}
 );
 
