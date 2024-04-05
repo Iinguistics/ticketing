@@ -21,8 +21,7 @@ class CreateInteractor extends Interactor {
 	}
 
 	async _execute(req: CreateRequest): Promise<CreateResponse> {
-		const ticketId = new Id(req.ticketId);
-		const ticket = await this.#ticketRepository.getById(ticketId);
+		const ticket = await this.#ticketRepository.getById(new Id(req.ticketId));
 
 		if (!ticket) {
 			throw new NotFoundError();
