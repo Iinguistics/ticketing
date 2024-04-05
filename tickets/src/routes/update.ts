@@ -1,17 +1,11 @@
 import express, { Request, Response } from 'express';
-import { body } from 'express-validator';
-import { natsWrapper } from '../NatsWrapper';
-import { Ticket } from '../models/ticket';
+import { body, param } from 'express-validator';
 import {
 	requireAuth,
 	validateRequest,
-	NotAuthorizedError,
-	NotFoundError,
 } from '@jmsgoytia-ticketing/common';
-// import UpdateController from '../Controllers/UpdateController';
-import TicketUpdatedPublisher from '../events/publishers/TicketUpdatedPublisher';
-const mongoose = require('mongoose');
 import prefix from './prefix';
+import UpdateController from '../Controllers/UpdateController';
 
 const router = express.Router();
 
@@ -21,40 +15,15 @@ router.put(
 	[
 		body('price').isFloat({ gt: 0 }).withMessage('Invalid Price'),
 		body('title').trim().notEmpty().withMessage('Title required'),
+		param('id')
+			.notEmpty()
+			.withMessage('ticket id is required')
+			.isMongoId()
+			.withMessage('id must be a valid ObjectId'),
 	],
 	validateRequest,
 	async (req: Request, res: Response) => {
-		// return UpdateController.handle(req, res);
-		const { id } = req.params;
-
-		const ticket = await Ticket.findOne({
-			_id: { $eq: new mongoose.Types.ObjectId(id) },
-			deleted_at: { $eq: null },
-		});
-
-		if (!ticket) {
-			throw new NotFoundError();
-		}
-
-		if (ticket.user_id !== req.currentUser!.id) {
-			throw new NotAuthorizedError();
-		}
-
-		ticket.set({
-			price: req.body.price,
-			title: req.body.title,
-		});
-
-		await ticket.save();
-
-		new TicketUpdatedPublisher(natsWrapper.client).publish({
-			id: ticket.id,
-			price: ticket.price,
-			title: ticket.title,
-			userId: ticket.user_id,
-		});
-
-		res.send(ticket);
+		return UpdateController.handle(req, res);
 	}
 );
 

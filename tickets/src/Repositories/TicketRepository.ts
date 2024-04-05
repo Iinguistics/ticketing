@@ -6,19 +6,22 @@ import TicketEntity from '../Entities/Ticket';
 import TicketFactory from '../Factories/TicketFactory';
 
 class TicketRepository extends Repository {
+	#ticket;
 	#ticketFactory;
 
 	constructor() {
 		super();
+		this.#ticket = Ticket;
 		this.#ticketFactory = TicketFactory;
 	}
 
 	async getAll(
 		pagination: Pagination | undefined = { limit: 100, offset: 0, page: 1 }
 	): Promise<TicketEntity[]> {
-		const tickets = await Ticket.find({
-			...TicketRepository._scope('notDeleted'),
-		})
+		const tickets = await this.#ticket
+			.find({
+				...TicketRepository._scope('notDeleted'),
+			})
 			.limit(pagination.limit)
 			.skip(TicketRepository._calcSkip(pagination));
 
@@ -30,30 +33,45 @@ class TicketRepository extends Repository {
 	}
 
 	async countAll(): Promise<number> {
-		return Ticket.countDocuments({
+		return this.#ticket.countDocuments({
 			...TicketRepository._scope('notDeleted'),
 		});
 	}
 
 	async getById(id: Id): Promise<TicketEntity | null> {
-		const ticket = await Ticket.findOne({
+		const ticket = await this.#ticket.findOne({
 			_id: { $eq: id.toObjectId() },
 			...TicketRepository._scope('notDeleted'),
 		});
 
-		if(!ticket){
+		if (!ticket) {
 			return null;
 		}
 
-		return this.#asEntity(ticket)
+		return this.#asEntity(ticket);
 	}
 
 	async create(attrs: TicketAttrs) {
-		const ticket = Ticket.build(attrs);
+		const ticket = this.#ticket.build(attrs);
 
 		await ticket.save();
 
 		return this.#asEntity(ticket);
+	}
+
+	async update(ticket: TicketEntity): Promise<void> {
+		const data = {
+			$set: {
+				price: ticket.price,
+				title: ticket.title,
+				modified_at: Date.now(),
+			},
+		};
+
+		await this.#ticket.updateOne(
+			{ _id: { $eq: ticket.id.toObjectId() } },
+			data
+		);
 	}
 
 	#asEntity(document: TicketDocument): TicketEntity {
