@@ -7,7 +7,7 @@ import request from 'supertest';
 const price = 20;
 const title = 'concert';
 
-async function createOrder() {
+async function createOrder(userSession: string[]) {
 	const ticket = Ticket.build({
 		title,
 		price,
@@ -17,7 +17,7 @@ async function createOrder() {
 
 	await request(app)
 		.post(`${prefix}/orders`)
-		.set('Cookie', global.login(true))
+		.set('Cookie', userSession)
 		.send({ ticket_id: ticket.id });
 }
 

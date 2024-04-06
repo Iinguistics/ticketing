@@ -10,17 +10,32 @@ it('returns a 401 if user is not logged in', async () => {
 });
 
 it('can fetch a list of orders', async () => {
-	await createOrder();
-	await createOrder();
+	const userOne = global.login();
+	const userTwo = global.login();
 
-	const response = await request(app)
+	await createOrder(userOne);
+	await createOrder(userOne);
+	await createOrder(userTwo);
+
+	const responseOne = await request(app)
 		.get(`${prefix}/orders`)
-		.set('Cookie', global.login(true))
+		.set('Cookie', userOne)
 		.expect(200);
 
-	response.body.orders.forEach((order: Order) => {
+	responseOne.body.orders.forEach((order: Order) => {
 		expect(order.status).toEqual(OrderStatus.Created);
 	});
 
-	expect(response.body.orders.length).toEqual(2);
+	expect(responseOne.body.orders.length).toEqual(2);
+
+	const responseTwo = await request(app)
+		.get(`${prefix}/orders`)
+		.set('Cookie', userTwo)
+		.expect(200);
+
+	responseTwo.body.orders.forEach((order: Order) => {
+		expect(order.status).toEqual(OrderStatus.Created);
+	});
+
+	expect(responseTwo.body.orders.length).toEqual(1);
 });
