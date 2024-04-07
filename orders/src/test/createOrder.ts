@@ -4,10 +4,10 @@ import app from '../app';
 import prefix from '../routes/prefix';
 import request from 'supertest';
 
-const price = 20;
-const title = 'concert';
+export const price = 20;
+export const title = 'concert';
 
-async function createOrder(userSession: string[]) {
+async function createOrder(userSession: string[]): Promise<string> {
 	const ticket = Ticket.build({
 		title,
 		price,
@@ -15,10 +15,12 @@ async function createOrder(userSession: string[]) {
 
 	await ticket.save();
 
-	await request(app)
+	const response = await request(app)
 		.post(`${prefix}/orders`)
 		.set('Cookie', userSession)
 		.send({ ticket_id: ticket.id });
+
+	return response.body.id;
 }
 
 export default createOrder;

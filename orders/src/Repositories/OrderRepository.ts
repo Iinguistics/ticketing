@@ -2,6 +2,7 @@ import { Id, OrderStatus, Repository } from '@jmsgoytia-ticketing/common';
 import { Order } from '../models/order';
 import { OrderDocument } from '../models/OrderDocument';
 import { OrderAttrs } from '../models/order';
+import { Types } from 'mongoose';
 import OrderEntity from '../Entities/Order';
 import OrderFactory from '../Factories/OrderFactory';
 
@@ -15,11 +16,41 @@ class OrderRepository extends Repository {
 		this.#orderFactory = OrderFactory;
 	}
 
-	async getActiveByUserId(id: Id): Promise<OrderEntity[]> {
-		const orders = await this.#order.find({
+	async getById(id: Id): Promise<OrderEntity | null> {
+		const order = await this.#order
+			.findById(id.toObjectId())
+			.populate('ticket');
+
+		if (!order) {
+			return null;
+		}
+
+		return this.#asEntity(order);
+	}
+
+	async getByUserId(
+		id: Id,
+		withCancelled: boolean | undefined = true
+	): Promise<OrderEntity[]> {
+		let query: {
+			user_id: { $eq: Types.ObjectId };
+			status?: { $ne: OrderStatus };
+		} = {
 			user_id: { $eq: id.toObjectId() },
-			status: { $ne: OrderStatus.Cancelled },
-		}).populate('ticket');
+		};
+
+		if (!withCancelled) {
+			query = {
+				...query,
+				status: { $ne: OrderStatus.Cancelled },
+			};
+		}
+
+		const orders = await this.#order
+			.find({
+				...query,
+			})
+			.populate('ticket');
 
 		return orders.map((order) => this.#asEntity(order));
 	}

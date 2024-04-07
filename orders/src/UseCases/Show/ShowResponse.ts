@@ -1,7 +1,7 @@
 import Order from '../../types/Order';
 
 type Response = Readonly<{
-	orders: Order[];
+	order: Order;
 }>;
 
 export default Response;

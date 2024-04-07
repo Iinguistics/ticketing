@@ -1,7 +1,7 @@
-import { Order } from '../../UseCases/Orders/OrdersResponse';
 import { OrderStatus } from '@jmsgoytia-ticketing/common';
 import app from '../../app';
 import createOrder from '../../test/createOrder';
+import Order from '../../types/Order';
 import prefix from '../prefix';
 import request from 'supertest';
 

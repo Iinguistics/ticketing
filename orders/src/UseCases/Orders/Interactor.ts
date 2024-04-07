@@ -1,6 +1,6 @@
 import { Id } from '@jmsgoytia-ticketing/common';
-import { Order } from './OrdersResponse';
 import Interactor from '../../UseCases/Interactor';
+import Order from '../../types/Order';
 import OrderEntity from '../../Entities/Order';
 import OrdersRequest from './OrdersRequest';
 import OrdersResponse from './OrdersResponse';
@@ -15,8 +15,9 @@ class OrdersInteractor extends Interactor {
 	}
 
 	async _execute(req: OrdersRequest): Promise<OrdersResponse> {
-		const orders = await this.#orderRepository.getActiveByUserId(
-			new Id(req.userId)
+		const orders = await this.#orderRepository.getByUserId(
+			new Id(req.userId),
+			false
 		);
 
 		return {
@@ -32,6 +33,7 @@ class OrdersInteractor extends Interactor {
 			status: order.status,
 			ticketPrice: order.ticket.price,
 			ticketTitle: order.ticket.title,
+			userId: order.userId.value,
 		};
 	}
 }
