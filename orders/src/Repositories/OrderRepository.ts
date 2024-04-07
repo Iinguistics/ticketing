@@ -63,6 +63,17 @@ class OrderRepository extends Repository {
 		return this.#asEntity(order);
 	}
 
+	async update(order: OrderEntity): Promise<void> {
+		const data = {
+			$set: {
+				modified_at: Date.now(),
+				status: order.status,
+			},
+		};
+
+		await this.#order.updateOne({ _id: { $eq: order.id.toObjectId() } }, data);
+	}
+
 	#asEntity(document: OrderDocument): OrderEntity {
 		return this.#orderFactory.reconstitute(document);
 	}
