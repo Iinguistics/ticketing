@@ -3,6 +3,7 @@ import { Order } from '../../models/order';
 import { OrderStatus } from '../../models/order';
 import { Ticket } from '../../models/ticket';
 import app from '../../app';
+import createOrder from '../../test/createOrder';
 import mongoose from 'mongoose';
 import prefix from '../prefix';
 import request from 'supertest';
@@ -53,4 +54,12 @@ it('reserves a ticket', async () => {
 		.set('Cookie', global.login())
 		.send({ ticket_id: ticket.id })
 		.expect(200);
+});
+
+it('publishes an event', async () => {
+	const session = global.login();
+
+	await createOrder(session);
+
+	expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

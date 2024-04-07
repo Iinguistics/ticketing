@@ -1,4 +1,5 @@
 import { createObjectId, OrderStatus } from '@jmsgoytia-ticketing/common';
+import { natsWrapper } from '../../NatsWrapper';
 import app from '../../app';
 import createOrder from '../../test/createOrder';
 import prefix from '../prefix';
@@ -55,4 +56,18 @@ it(`updates the status of the order to ${OrderStatus.Cancelled}`, async () => {
 
 	expect(response.body.order.id).toEqual(orderId);
 	expect(response.body.order.status).toEqual(OrderStatus.Cancelled);
+});
+
+it('publishes an event', async () => {
+	const session = global.login();
+
+	const orderId = await createOrder(session);
+
+	await request(app)
+		.patch(`${prefix}/orders/${orderId}`)
+		.set('Cookie', session)
+		.send()
+		.expect(200);
+
+	expect(natsWrapper.client.publish).toHaveBeenCalled();
 });

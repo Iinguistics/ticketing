@@ -5,19 +5,25 @@ import {
 	OrderStatus,
 } from '@jmsgoytia-ticketing/common';
 import { EXPIRATION_WINDOW_SECONDS } from '../../local/config';
+import { natsWrapper } from '../../NatsWrapper';
 import CreateRequest from './CreateRequest';
 import CreateResponse from './CreateResponse';
 import Interactor from '../../UseCases/Interactor';
 import OkHttpPresenter from '../../Presenters/OkPresenter';
+import OrderCreatedPublisher from '../../events/publishers/OrderCreatedPublisher';
 import OrderRepository from '../../Repositories/OrderRepository';
 import TicketRepository from '../../Repositories/TicketRepository';
 
 class CreateInteractor extends Interactor {
-	#orderRepository = OrderRepository;
-	#ticketRepository = TicketRepository;
+	#orderRepository;
+	#publisher;
+	#ticketRepository;
 
 	constructor() {
 		super(OkHttpPresenter);
+		this.#orderRepository = OrderRepository;
+		this.#publisher = new OrderCreatedPublisher(natsWrapper.client);
+		this.#ticketRepository = TicketRepository;
 	}
 
 	async _execute(req: CreateRequest): Promise<CreateResponse> {
@@ -39,6 +45,17 @@ class CreateInteractor extends Interactor {
 			expires_at: expiration,
 			status: OrderStatus.Created,
 			ticket,
+		});
+
+		this.#publisher.publish({
+			expiresAt: order.expiresAt.toISOString(),
+			id: order.id.value,
+			status: order.status,
+			ticket: {
+				id: order.ticket.id,
+				price: order.ticket.price,
+			},
+			userId: order.userId.value,
 		});
 
 		return {
