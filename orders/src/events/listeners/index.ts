@@ -1,4 +1,6 @@
 import TicketCreatedListener from './TicketCreatedListener';
 import TicketUpdatedListener from './TicketUpdatedListener';
 
-export { TicketCreatedListener, TicketUpdatedListener };
+const listeners = [TicketCreatedListener, TicketUpdatedListener];
+
+export default listeners;
