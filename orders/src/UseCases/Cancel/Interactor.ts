@@ -14,11 +14,9 @@ import OrderCancelledPublisher from '../../events/publishers/OrderCancelledPubli
 
 class CancelInteractor extends Interactor {
 	#orderRepository = OrderRepository;
-	#publisher;
 
 	constructor() {
 		super(OkHttpPresenter);
-		this.#publisher = new OrderCancelledPublisher(natsWrapper.client);
 	}
 
 	async _execute(req: CancelRequest): Promise<CancelResponse> {
@@ -37,7 +35,7 @@ class CancelInteractor extends Interactor {
 
 		await this.#orderRepository.update(order);
 
-		this.#publisher.publish({
+		new OrderCancelledPublisher(natsWrapper.client).publish({
 			id: order.id.value,
 			ticket: {
 				id: order.ticket.id,

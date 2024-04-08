@@ -16,13 +16,11 @@ import TicketRepository from '../../Repositories/TicketRepository';
 
 class CreateInteractor extends Interactor {
 	#orderRepository;
-	#publisher;
 	#ticketRepository;
 
 	constructor() {
 		super(OkHttpPresenter);
 		this.#orderRepository = OrderRepository;
-		this.#publisher = new OrderCreatedPublisher(natsWrapper.client);
 		this.#ticketRepository = TicketRepository;
 	}
 
@@ -49,7 +47,7 @@ class CreateInteractor extends Interactor {
 			ticket,
 		});
 
-		this.#publisher.publish({
+		new OrderCreatedPublisher(natsWrapper.client).publish({
 			expiresAt: order.expiresAt.toISOString(),
 			id: order.id.value,
 			status: order.status,
