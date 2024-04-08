@@ -1,7 +1,7 @@
 import { Id } from '@jmsgoytia-ticketing/common';
 import Interactor from '../../UseCases/Interactor';
 import Order from '../../types/Order';
-import OrderEntity from '../../Entities/Order';
+import OrderEntity from '../../Entities/Order/Order';
 import OrdersRequest from './OrdersRequest';
 import OrdersResponse from './OrdersResponse';
 import OkHttpPresenter from '../../Presenters/OkPresenter';

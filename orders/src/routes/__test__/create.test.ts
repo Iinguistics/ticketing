@@ -1,3 +1,4 @@
+import { createObjectId } from '@jmsgoytia-ticketing/common';
 import { natsWrapper } from '../../NatsWrapper';
 import { Order } from '../../models/order';
 import { OrderStatus } from '../../models/order';
@@ -43,6 +44,7 @@ it.todo('fix timeout issues');
 
 it('reserves a ticket', async () => {
 	const ticket = Ticket.build({
+		_id: createObjectId(),
 		title,
 		price,
 	});

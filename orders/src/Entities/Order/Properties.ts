@@ -1,6 +1,6 @@
 import { Id } from '@jmsgoytia-ticketing/common';
-import { OrderStatus } from '../models/order';
-import { TicketDocument } from '../models/TicketDocument';
+import { OrderStatus } from '../../models/order';
+import { TicketDocument } from '../../models/TicketDocument';
 
 type Properties = Readonly<{
 	createdAt: Date;

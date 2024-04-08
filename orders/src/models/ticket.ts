@@ -3,6 +3,7 @@ import { TicketDocument } from './TicketDocument';
 import mongoose from 'mongoose';
 
 export interface TicketAttrs {
+	_id: string;
 	price: number;
 	title: string;
 }

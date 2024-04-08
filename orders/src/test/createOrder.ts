@@ -9,6 +9,7 @@ export const title = 'concert';
 
 async function createOrder(userSession: string[]): Promise<string> {
 	const ticket = Ticket.build({
+		_id: createObjectId(),
 		title,
 		price,
 	});
