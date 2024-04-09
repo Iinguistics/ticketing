@@ -7,6 +7,7 @@ class Ticket {
 	#price;
 	#title;
 	#userId;
+	#version;
 
 	constructor(properties: Properties) {
 		this.#createdAt = properties.createdAt;
@@ -15,6 +16,7 @@ class Ticket {
 		this.#price = properties.price;
 		this.#title = properties.title;
 		this.#userId = properties.userId;
+		this.#version = properties.version;
 	}
 
 	get id() {
@@ -47,6 +49,10 @@ class Ticket {
 
 	get userId() {
 		return this.#userId;
+	}
+
+	get version() {
+		return this.#version;
 	}
 }
 

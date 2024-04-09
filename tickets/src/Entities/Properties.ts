@@ -7,6 +7,7 @@ type Properties = Readonly<{
 	price: number;
 	title: string;
 	userId: Id;
+	version: number;
 }>;
 
 export default Properties;

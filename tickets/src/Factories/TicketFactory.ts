@@ -11,6 +11,7 @@ class TicketFactory {
 			price: document.price,
 			title: document.title,
 			userId: new Id(document.user_id),
+			version: document.version,
 		});
 	}
 }
