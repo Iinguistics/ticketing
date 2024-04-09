@@ -7,6 +7,7 @@ export interface OrderCancelledEvent {
 			id: string;
 		};
 		userId: string;
+		version: number;
 	};
 	subject: Subjects.OrderCancelled;
 }
