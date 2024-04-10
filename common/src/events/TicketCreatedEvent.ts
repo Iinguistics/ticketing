@@ -6,7 +6,6 @@ export interface TicketCreatedEvent {
 		price: number;
 		title: string;
 		userId: string;
-		version: number;
 	};
 	subject: Subjects.TicketCreated;
 }

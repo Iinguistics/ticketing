@@ -4,11 +4,13 @@ class Ticket {
 	#id;
 	#price;
 	#title;
+	#version;
 
 	constructor(properties: Properties) {
 		this.#id = properties.id;
 		this.#price = properties.price;
 		this.#title = properties.title;
+		this.#version = properties.version;
 	}
 
 	get id() {
@@ -29,6 +31,14 @@ class Ticket {
 
 	set title(value) {
 		this.#title = value;
+	}
+
+	get version() {
+		return this.#version;
+	}
+
+	set version(value){
+		this.#version = value;
 	}
 }
 

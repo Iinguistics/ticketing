@@ -9,4 +9,5 @@ export interface OrderDocument extends mongoose.Document {
 	status: OrderStatus;
 	ticket: TicketDocument;
 	user_id: string;
+	version: number;
 }

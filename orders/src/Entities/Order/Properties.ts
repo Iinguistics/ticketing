@@ -9,6 +9,7 @@ type Properties = Readonly<{
 	status: OrderStatus;
 	ticket: TicketDocument;
 	userId: Id;
+	version: number;
 }>;
 
 export default Properties;

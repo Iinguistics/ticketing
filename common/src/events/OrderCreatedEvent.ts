@@ -12,7 +12,6 @@ export interface OrderCreatedEvent {
 			price: number;
 		};
 		userId: string;
-		version: number;
 	};
 	subject: Subjects.OrderCreated;
 }

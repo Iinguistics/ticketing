@@ -24,14 +24,20 @@ class TicketRepository extends Repository {
 		return this.#asEntity(ticket);
 	}
 
-	async getDocumentById(id: Id): Promise<TicketDocument | null> {
-		const ticket = await this.#ticket.findById(id.value);
+	async getByEventVersion(
+		id: Id,
+		version: number
+	): Promise<TicketEntity | null> {
+		const ticket = await Ticket.findOne({
+			_id: { $eq: id.toObjectId() },
+			version: { $eq: version - 1 },
+		});
 
 		if (!ticket) {
 			return null;
 		}
 
-		return ticket;
+		return this.#asEntity(ticket);
 	}
 
 	async create(attrs: TicketAttrs): Promise<TicketDocument> {
@@ -55,6 +61,8 @@ class TicketRepository extends Repository {
 			{ _id: { $eq: ticket.id.toObjectId() } },
 			data
 		);
+
+		ticket.version = ticket.version + 1;
 	}
 
 	#asEntity(document: TicketDocument): TicketEntity {

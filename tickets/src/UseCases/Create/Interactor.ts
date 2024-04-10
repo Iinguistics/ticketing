@@ -26,7 +26,6 @@ class CreateInteractor extends Interactor {
 			price: ticket.price,
 			title: ticket.title,
 			userId: ticket.userId.value,
-			version: ticket.version,
 		});
 
 		return {

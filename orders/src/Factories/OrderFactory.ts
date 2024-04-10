@@ -11,6 +11,7 @@ class OrderFactory {
 			status: document.status,
 			ticket: document.ticket,
 			userId: new Id(document.user_id),
+			version: document.version,
 		});
 	}
 }

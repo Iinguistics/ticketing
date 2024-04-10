@@ -7,6 +7,7 @@ class Order {
 	#status
 	#ticket;
 	#userId;
+	#version;
 
 	constructor(properties: Properties) {
 		this.#createdAt = properties.createdAt;
@@ -15,6 +16,7 @@ class Order {
 		this.#status = properties.status;
 		this.#ticket = properties.ticket;
 		this.#userId = properties.userId;
+		this.#version = properties.version;
 	}
 
 	get id() {
@@ -44,6 +46,16 @@ class Order {
 	get createdAt() {
 		return this.#createdAt;
 	}
+
+	get version(){
+		return this.#version;
+	}
+
+	set version(value){
+		this.#version = value;
+	}
+
+
 }
 
 export default Order;

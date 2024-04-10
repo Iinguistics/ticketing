@@ -8,6 +8,7 @@ class TicketFactory {
 			id: new Id(document.id),
 			price: document.price,
 			title: document.title,
+			version: document.version,
 		});
 	}
 }

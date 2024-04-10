@@ -16,12 +16,15 @@ class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
 		data: TicketUpdatedEvent['data'],
 		msg: Message
 	): Promise<void> {
-		const { id, price, title } = data;
+		const { id, price, title, version } = data;
 
-		const ticket = await TicketRepository.getById(new Id(id));
+		const ticket = await TicketRepository.getByEventVersion(
+			new Id(id),
+			version
+		);
 
-		if(!ticket){
-			throw new Error('Ticket not found')
+		if (!ticket) {
+			throw new Error('Ticket not found');
 		}
 
 		ticket.price = price;

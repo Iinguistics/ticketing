@@ -41,6 +41,7 @@ class CancelInteractor extends Interactor {
 				id: order.ticket.id,
 			},
 			userId: order.userId.value,
+			version: order.version,
 		});
 
 		return {

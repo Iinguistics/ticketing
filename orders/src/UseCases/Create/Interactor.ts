@@ -25,15 +25,13 @@ class CreateInteractor extends Interactor {
 	}
 
 	async _execute(req: CreateRequest): Promise<CreateResponse> {
-		const ticket = await this.#ticketRepository.getDocumentById(
-			new Id(req.ticketId)
-		);
+		const ticket = await this.#ticketRepository.getById(new Id(req.ticketId));
 
 		if (!ticket) {
 			throw new NotFoundError();
 		}
 
-		if (await ticket.isReserved()) {
+		if (await this.#orderRepository.isReserved(ticket)) {
 			throw new BadRequestError('Ticket is already reserved');
 		}
 
@@ -44,7 +42,7 @@ class CreateInteractor extends Interactor {
 			user_id: req.userId,
 			expires_at: expiration,
 			status: OrderStatus.Created,
-			ticket,
+			ticket: ticket.id.toObjectId(),
 		});
 
 		new OrderCreatedPublisher(natsWrapper.client).publish({

@@ -16,6 +16,7 @@ abstract class Interactor {
 			if (exception instanceof CustomError) {
 				throw exception;
 			  } else {
+				console.error(exception);
 				throw new BadRequestError('An unexpected error has occurred');
 			  }
 		}

@@ -5,6 +5,7 @@ import { OrderAttrs } from '../models/order';
 import { Types } from 'mongoose';
 import OrderEntity from '../Entities/Order';
 import OrderFactory from '../Factories/OrderFactory';
+import TicketEntity from '../Entities/Ticket';
 
 class OrderRepository extends Repository {
 	#order;
@@ -55,6 +56,21 @@ class OrderRepository extends Repository {
 		return orders.map((order) => this.#asEntity(order));
 	}
 
+	async isReserved(ticket: TicketEntity): Promise<boolean> {
+		const existingOrder = await Order.findOne({
+			ticket: { $eq: ticket.id.toObjectId() },
+			status: {
+				$in: [
+					OrderStatus.AwaitingPayment,
+					OrderStatus.Complete,
+					OrderStatus.Created,
+				],
+			},
+		});
+
+		return !!existingOrder;
+	}
+
 	async create(attrs: OrderAttrs) {
 		const order = Order.build(attrs);
 
@@ -72,6 +88,8 @@ class OrderRepository extends Repository {
 		};
 
 		await this.#order.updateOne({ _id: { $eq: order.id.toObjectId() } }, data);
+
+		order.version = order.version + 1;
 	}
 
 	#asEntity(document: OrderDocument): OrderEntity {

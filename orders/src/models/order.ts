@@ -1,6 +1,6 @@
 import { OrderDocument } from './OrderDocument';
 import { OrderStatus } from '@jmsgoytia-ticketing/common';
-import { TicketDocument } from './TicketDocument';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import mongoose from 'mongoose';
 
 export { OrderStatus };
@@ -8,7 +8,7 @@ export { OrderStatus };
 export interface OrderAttrs {
 	expires_at: Date;
 	status: OrderStatus;
-	ticket: TicketDocument;
+	ticket: mongoose.Types.ObjectId;
 	user_id: string;
 }
 
@@ -28,7 +28,7 @@ const orderSchema = new mongoose.Schema(
 			required: true,
 		},
 		ticket: {
-			type: mongoose.Schema.Types.ObjectId,
+			type: mongoose.Types.ObjectId,
 			ref: 'Ticket',
 		},
 		user_id: {
@@ -42,11 +42,13 @@ const orderSchema = new mongoose.Schema(
 				ret.id = ret._id;
 				ret.user_id = ret.user_id;
 				delete ret._id;
-				delete ret.__v;
 			},
 		},
 	}
 );
+
+orderSchema.set('versionKey', 'version');
+orderSchema.plugin(updateIfCurrentPlugin);
 
 orderSchema.statics.build = (attrs: OrderAttrs) => {
 	return new Order(attrs);
