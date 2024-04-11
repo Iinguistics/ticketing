@@ -54,6 +54,10 @@ class Ticket {
 	get version() {
 		return this.#version;
 	}
+
+	incrementVersion() {
+		this.#version += 1;
+	}
 }
 
 export default Ticket;

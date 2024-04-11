@@ -4,7 +4,7 @@ class Order {
 	#createdAt;
 	#expiresAt;
 	#id;
-	#status
+	#status;
 	#ticket;
 	#userId;
 	#version;
@@ -35,7 +35,7 @@ class Order {
 		this.#status = value;
 	}
 
-	get ticket(){
+	get ticket() {
 		return this.#ticket;
 	}
 
@@ -47,15 +47,13 @@ class Order {
 		return this.#createdAt;
 	}
 
-	get version(){
+	get version() {
 		return this.#version;
 	}
 
-	set version(value){
-		this.#version = value;
+	incrementVersion() {
+		this.#version += 1;
 	}
-
-
 }
 
 export default Order;

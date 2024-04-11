@@ -89,7 +89,7 @@ class OrderRepository extends Repository {
 
 		await this.#order.updateOne({ _id: { $eq: order.id.toObjectId() } }, data);
 
-		order.version = order.version + 1;
+		order.incrementVersion();
 	}
 
 	#asEntity(document: OrderDocument): OrderEntity {

@@ -37,8 +37,8 @@ class Ticket {
 		return this.#version;
 	}
 
-	set version(value){
-		this.#version = value;
+	incrementVersion() {
+		this.#version += 1;
 	}
 }
 

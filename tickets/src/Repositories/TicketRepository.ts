@@ -72,6 +72,8 @@ class TicketRepository extends Repository {
 			{ _id: { $eq: ticket.id.toObjectId() } },
 			data
 		);
+
+		ticket.incrementVersion();
 	}
 
 	#asEntity(document: TicketDocument): TicketEntity {

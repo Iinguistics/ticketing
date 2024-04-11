@@ -62,7 +62,7 @@ class TicketRepository extends Repository {
 			data
 		);
 
-		ticket.version = ticket.version + 1;
+		ticket.incrementVersion();
 	}
 
 	#asEntity(document: TicketDocument): TicketEntity {
