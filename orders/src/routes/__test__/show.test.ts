@@ -1,5 +1,5 @@
 import { createObjectId } from '@jmsgoytia-ticketing/common';
-import { price, title } from '../../test/createOrder';
+import { price, title } from '../../test/createTicket';
 import app from '../../app';
 import createOrder from '../../test/createOrder';
 import prefix from '../prefix';
