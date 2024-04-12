@@ -28,18 +28,18 @@ const setup = async () => {
 
 	await listener.onMessage(data, msg);
 
-	return { listener, data, msg };
+	return { listener, data, msg, ticket };
 };
 
 it('finds, updates and saves a ticket', async () => {
-	const { data } = await setup();
+	const { data, ticket } = await setup();
 
-	const ticket = await Ticket.findById(data.id);
+	const updatedTicket = await Ticket.findById(ticket.id);
 
-	expect(ticket).toBeDefined();
-	expect(ticket?.price).toEqual(data.price);
-	expect(ticket?.title).toEqual(data.title);
-	expect(ticket?.version).toEqual(data.version);
+	expect(updatedTicket).toBeDefined();
+	expect(updatedTicket?.price).toEqual(data.price);
+	expect(updatedTicket?.title).toEqual(data.title);
+	expect(updatedTicket?.version).toEqual(data.version);
 });
 
 it('acknowledges the message', async () => {
