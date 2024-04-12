@@ -60,18 +60,22 @@ class TicketRepository extends Repository {
 	}
 
 	async update(ticket: TicketEntity): Promise<void> {
+		const document = await this.#ticket.findById(ticket.id.toObjectId());
+
+		if (!document) {
+			throw new Error(
+				`Cannot update, ticket document with ID: ${ticket.id.toObjectId()} not found`
+			);
+		}
+
 		const data = {
-			$set: {
-				price: ticket.price,
-				title: ticket.title,
-				modified_at: Date.now(),
-			},
+			modified_at: Date.now(),
+			price: ticket.price,
+			title: ticket.title,
 		};
 
-		await this.#ticket.updateOne(
-			{ _id: { $eq: ticket.id.toObjectId() } },
-			data
-		);
+		document.set(data);
+		await document.save();
 
 		ticket.incrementVersion();
 	}

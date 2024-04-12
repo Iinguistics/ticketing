@@ -80,15 +80,22 @@ class OrderRepository extends Repository {
 	}
 
 	async update(order: OrderEntity): Promise<void> {
+		const document = await this.#order.findById(order.id.toObjectId());
+
+		if (!document) {
+			throw new Error(
+				`Cannot update, order document with ID: ${order.id.toObjectId()} not found`
+			);
+		}
+
 		const data = {
-			$set: {
-				modified_at: Date.now(),
-				status: order.status,
-			},
+			modified_at: Date.now(),
+			status: order.status,
 		};
 
-		await this.#order.updateOne({ _id: { $eq: order.id.toObjectId() } }, data);
-
+		document.set(data)
+		await document.save();
+		
 		order.incrementVersion();
 	}
 

@@ -64,7 +64,6 @@ class TicketRepository extends Repository {
 		};
 
 		document.set(data)
-
 		await document.save();
 
 		ticket.incrementVersion();
