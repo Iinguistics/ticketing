@@ -1,6 +1,6 @@
 import {
 	createObjectId,
-	TicketUpdatedEvent
+	TicketUpdatedEvent,
 } from '@jmsgoytia-ticketing/common';
 import { Message } from 'node-nats-streaming';
 import { natsWrapper } from '../../../NatsWrapper';
@@ -8,7 +8,7 @@ import { Ticket } from '../../../models/ticket';
 import createTicket from '../../../test/createTicket';
 import TicketUpdatedListener from '../TicketUpdatedListener';
 
-const setup = async () => {
+const setup = async (invokeOnMessage: boolean | undefined = true) => {
 	const ticket = await createTicket();
 
 	const listener = new TicketUpdatedListener(natsWrapper.client);
@@ -26,7 +26,9 @@ const setup = async () => {
 		ack: jest.fn(),
 	};
 
-	await listener.onMessage(data, msg);
+	if (invokeOnMessage) {
+		await listener.onMessage(data, msg);
+	}
 
 	return { listener, data, msg, ticket };
 };
@@ -46,4 +48,16 @@ it('acknowledges the message', async () => {
 	const { msg } = await setup();
 
 	expect(msg.ack).toHaveBeenCalled();
+});
+
+it('does not call ack if the event has an incorrect, skipped version number', async () => {
+	const { data, listener, msg } = await setup(false);
+
+	data.version = 5;
+
+	try {
+		await listener.onMessage(data, msg);
+	} catch (error) {}
+
+	expect(msg.ack).not.toHaveBeenCalled();
 });
