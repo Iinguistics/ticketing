@@ -5,6 +5,7 @@ export interface TicketDocument extends mongoose.Document {
 	deleted_at: Date | null;
 	id: string;
 	modified_at: Date;
+	order_id?: string;
 	price: number;
 	title: string;
 	user_id: string;

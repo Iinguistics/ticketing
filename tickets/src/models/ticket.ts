@@ -17,6 +17,9 @@ const ticketSchema = new mongoose.Schema(
 		created_at: { default: Date.now, type: Date },
 		deleted_at: { default: null, type: Date },
 		modified_at: { default: Date.now, type: Date },
+		order_id: {
+			type: String,
+		},
 		price: {
 			type: Number,
 			required: true,

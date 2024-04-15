@@ -4,6 +4,7 @@ import { TicketDocument } from '../models/TicketDocument';
 import { TicketAttrs } from '../models/ticket';
 import TicketEntity from '../Entities/Ticket';
 import TicketFactory from '../Factories/TicketFactory';
+import UpdateData from './UpdateData';
 
 class TicketRepository extends Repository {
 	#ticket;
@@ -68,11 +69,15 @@ class TicketRepository extends Repository {
 			);
 		}
 
-		const data = {
+		const data: UpdateData = {
 			modified_at: Date.now(),
 			price: ticket.price,
 			title: ticket.title,
 		};
+
+		if (ticket.orderId) {
+			data.order_id = ticket.orderId.toObjectId();
+		}
 
 		document.set(data);
 		await document.save();

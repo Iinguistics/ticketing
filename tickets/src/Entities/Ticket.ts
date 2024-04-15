@@ -4,6 +4,7 @@ class Ticket {
 	#createdAt;
 	#deletedAt;
 	#id;
+	#orderId;
 	#price;
 	#title;
 	#userId;
@@ -13,6 +14,7 @@ class Ticket {
 		this.#createdAt = properties.createdAt;
 		this.#deletedAt = properties.deletedAt ?? null;
 		this.#id = properties.id;
+		this.#orderId = properties.orderId;
 		this.#price = properties.price;
 		this.#title = properties.title;
 		this.#userId = properties.userId;
@@ -49,6 +51,14 @@ class Ticket {
 
 	get userId() {
 		return this.#userId;
+	}
+
+	get orderId() {
+		return this.#orderId;
+	}
+
+	set orderId(value) {
+		this.#orderId = value;
 	}
 
 	get version() {
