@@ -10,15 +10,15 @@ export abstract class Listener<T extends Event> {
 	abstract subject: T['subject'];
 	abstract queueGroupName: string;
 	abstract onMessage(data: T['data'], msg: Message): void;
-	#client: Stan;
+	_client: Stan;
 	_ackWait = 5 * 1000;
 
 	constructor(client: Stan) {
-		this.#client = client;
+		this._client = client;
 	}
 
 	subscriptionOptions() {
-		return this.#client
+		return this._client
 			.subscriptionOptions()
 			.setDeliverAllAvailable()
 			.setManualAckMode(true)
@@ -27,7 +27,7 @@ export abstract class Listener<T extends Event> {
 	}
 
 	listen() {
-		const subscription = this.#client.subscribe(
+		const subscription = this._client.subscribe(
 			this.subject,
 			this.queueGroupName,
 			this.subscriptionOptions()
