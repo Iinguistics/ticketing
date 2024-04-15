@@ -1,6 +1,6 @@
-import { Id } from '@jmsgoytia-ticketing/common'
+import { Id } from '@jmsgoytia-ticketing/common';
 import { TicketDocument } from '../models/TicketDocument';
-import Ticket from '../Entities/Ticket'
+import Ticket from '../Entities/Ticket';
 
 class TicketFactory {
 	reconstitute(document: TicketDocument) {
@@ -8,6 +8,7 @@ class TicketFactory {
 			createdAt: document.created_at,
 			deletedAt: document.deleted_at,
 			id: new Id(document.id),
+			orderId: document.order_id ? new Id(document.order_id) : null,
 			price: document.price,
 			title: document.title,
 			userId: new Id(document.user_id),
