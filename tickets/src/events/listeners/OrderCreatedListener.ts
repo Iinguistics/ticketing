@@ -8,6 +8,7 @@ import {
 import { QUEUE_GROUP_NAME } from '../../local/config';
 import Ticket from '../../Entities/Ticket';
 import TicketRepository from '../../Repositories/TicketRepository';
+import TicketUpdatedPublisher from '../publishers/TicketUpdatedPublisher';
 
 class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 	readonly subject = Subjects.OrderCreated;
@@ -24,6 +25,15 @@ class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 		ticket.orderId = new Id(id);
 
 		await TicketRepository.update(ticket);
+
+		await new TicketUpdatedPublisher(this._client).publish({
+			id: ticket.id.value,
+			orderId: ticket.orderId.value,
+			price: ticket.price,
+			title: ticket.title,
+			userId: ticket.userId.value,
+			version: ticket.version,
+		});
 
 		msg.ack();
 	}
