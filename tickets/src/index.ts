@@ -1,6 +1,7 @@
 import { checkEnvVars } from '@jmsgoytia-ticketing/common'
 import { natsWrapper } from './NatsWrapper';
 import app from './app';
+import listeners from './events/listeners';
 import mongoose from 'mongoose';
 
 const start = async () => {
@@ -18,6 +19,10 @@ const start = async () => {
 		});
 		process.on('SIGINT', () => natsWrapper.client.close());
 		process.on('SIGTERM', () => natsWrapper.client.close());
+
+		listeners.forEach((listener) => {
+			new listener(natsWrapper.client).listen();
+		});
 
 		await mongoose.connect(process.env.MONGO_URI!);
 		console.log('Connected to mongodb');
