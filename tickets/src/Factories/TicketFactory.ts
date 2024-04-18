@@ -8,7 +8,7 @@ class TicketFactory {
 			createdAt: document.created_at,
 			deletedAt: document.deleted_at,
 			id: new Id(document.id),
-			orderId: document.order_id ? new Id(document.order_id) : null,
+			orderId: document.order_id ? new Id(document.order_id) : undefined,
 			price: document.price,
 			title: document.title,
 			userId: new Id(document.user_id),

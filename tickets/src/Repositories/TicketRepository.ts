@@ -70,6 +70,7 @@ class TicketRepository extends Repository {
 		}
 
 		const data: UpdateData = {
+			order_id: undefined,
 			modified_at: Date.now(),
 			price: ticket.price,
 			title: ticket.title,
