@@ -1,4 +1,5 @@
 import { natsWrapper } from '../../NatsWrapper';
+import { Ticket } from '../../models/ticket';
 import app from '../../app';
 import createObjectId from '../../test/createObjectId';
 import createTicket from '../../test/createTicket';
@@ -75,4 +76,31 @@ it('updates the ticket when provided valid inputs', async () => {
 	expect(ticketResponse.body.ticket.price).toEqual(30);
 	expect(ticketResponse.body.ticket.title).toEqual('new title');
 	expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
+
+it('rejects the update if the ticket is reserved', async () => {
+	const cookie = global.login();
+	const response = await request(app)
+		.post(`${prefix}/tickets`)
+		.set('Cookie', cookie)
+		.send({ price, title });
+
+	const ticketId = response.body.id;
+
+	const ticket = await Ticket.findById(ticketId);
+	ticket!.set({ order_id: createObjectId() });
+	await ticket?.save();
+
+	await request(app)
+		.put(`${prefix}/tickets/${ticketId}`)
+		.set('Cookie', cookie)
+		.send({ price: 30, title: 'new title' })
+		.expect(400);
+
+	const ticketResponse = await request(app)
+		.get(`${prefix}/tickets/${ticketId}`)
+		.send();
+
+	expect(ticketResponse.body.ticket.price).toEqual(price);
+	expect(ticketResponse.body.ticket.title).not.toEqual('new title');
 });
