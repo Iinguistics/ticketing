@@ -1,5 +1,6 @@
 import { checkEnvVars } from '@jmsgoytia-ticketing/common';
 import { natsWrapper } from './NatsWrapper';
+import listeners from './events/listeners';
 
 const start = async () => {
 	checkEnvVars(['NATS_CLIENT_ID', 'NATS_CLUSTER_ID', 'NATS_URL']);
@@ -16,6 +17,10 @@ const start = async () => {
 		});
 		process.on('SIGINT', () => natsWrapper.client.close());
 		process.on('SIGTERM', () => natsWrapper.client.close());
+
+		listeners.forEach((listener) => {
+			new listener(natsWrapper.client).listen();
+		});
 	} catch (error) {
 		console.error(error);
 	}
