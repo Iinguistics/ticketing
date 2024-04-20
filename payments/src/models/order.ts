@@ -19,7 +19,6 @@ interface OrderModel extends mongoose.Model<OrderDocument> {
 
 const orderSchema = new mongoose.Schema(
 	{
-		created_at: { default: Date.now, type: Date },
 		price: {
 			type: Number,
 			required: true

@@ -32,6 +32,7 @@ const setup = async () => {
 			price: ticket.price,
 		},
 		userId: createObjectId(),
+		version: 0,
 	};
 
 	// @ts-ignore
