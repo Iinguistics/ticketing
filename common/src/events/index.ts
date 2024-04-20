@@ -1,3 +1,4 @@
+import { ExpirationCompleteEvent } from './ExpirationCompleteEvent';
 import { Listener } from './Listener';
 import { OrderCancelledEvent } from './OrderCancelledEvent';
 import { OrderCreatedEvent } from './OrderCreatedEvent';
@@ -8,6 +9,7 @@ import { TicketCreatedEvent } from './TicketCreatedEvent';
 import { TicketUpdatedEvent } from './TicketUpdatedEvent';
 
 export {
+	ExpirationCompleteEvent,
 	Listener,
 	OrderCancelledEvent,
 	OrderCreatedEvent,
