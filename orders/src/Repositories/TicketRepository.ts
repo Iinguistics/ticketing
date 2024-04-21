@@ -40,12 +40,12 @@ class TicketRepository extends Repository {
 		return this.#asEntity(ticket);
 	}
 
-	async create(attrs: TicketAttrs): Promise<TicketDocument> {
+	async create(attrs: TicketAttrs): Promise<TicketEntity> {
 		const ticket = this.#ticket.build(attrs);
 
 		await ticket.save();
 
-		return ticket;
+		return this.#asEntity(ticket);
 	}
 
 	async update(ticket: TicketEntity): Promise<void> {
