@@ -4,8 +4,8 @@ import {
 	OrderCreatedEvent,
 	Subjects,
 } from '@jmsgoytia-ticketing/common';
-import { Order } from '../../models/order';
 import { QUEUE_GROUP_NAME } from '../../local/config';
+import OrderRepository from '../../Repositories/OrderRepository';
 
 class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 	readonly subject = Subjects.OrderCreated;
@@ -15,15 +15,15 @@ class OrderCreatedListener extends Listener<OrderCreatedEvent> {
 		data: OrderCreatedEvent['data'],
 		msg: Message
 	): Promise<void> {
-		const order = Order.build({
+		const attrs = {
 			_id: data.id,
 			price: data.ticket.price,
 			status: data.status,
 			user_id: data.userId,
 			version: data.version,
-		});
+		};
 
-		await order.save();
+		await OrderRepository.create(attrs);
 
 		msg.ack();
 	}
