@@ -54,6 +54,7 @@ class CreateInteractor extends Interactor {
 				price: order.ticket.price,
 			},
 			userId: order.userId.value,
+			version: order.version,
 		});
 
 		return {
