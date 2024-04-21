@@ -1,15 +1,17 @@
+import { createObjectId } from '@jmsgoytia-ticketing/common';
 import { MongoMemoryServer } from 'mongodb-memory-server';
-import createObjectId from './createObjectId';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
 declare global {
-  var login: () => string[];
+  var login: (persistUser?: boolean) => string[];
 }
 
 let mongo: any;
 
 jest.mock('../NatsWrapper');
+
+export const userId = createObjectId();
 
 beforeAll(async () => {
   process.env.JWT_KEY = 'abc';
@@ -37,11 +39,11 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.login = () => {
+global.login = (persistUser: boolean | undefined = false) => {
   const payload = {
-    id:  createObjectId(),
-    email: 'test@test.com'
-  };
+		id: persistUser ? userId : createObjectId(),
+		email: 'test@test.com',
+	};
 
   const token = jwt.sign(payload, process.env.JWT_KEY!);
 
