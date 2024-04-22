@@ -2,8 +2,6 @@ import { STRIPE_API_VERSION } from '../../local/config';
 import Create from './Create';
 import Stripe from 'stripe';
 
-// TODO: implement retrieve method
-
 class StripeGateWay {
 	#currency = 'usd';
 	#stripe = new Stripe(process.env.STRIPE_KEY!, {
@@ -42,6 +40,15 @@ class StripeGateWay {
 			return this.#stripe.paymentIntents.list({ limit });
 		} catch (error) {
 			console.error('Error retrieving charge list:', error);
+			throw error;
+		}
+	}
+
+	async retrieve(id: string): Promise<Stripe.Response<Stripe.PaymentIntent>> {
+		try {
+			return this.#stripe.paymentIntents.retrieve(id);
+		} catch (error) {
+			console.error(`Error retrieving charge ID: ${id}`, error);
 			throw error;
 		}
 	}
