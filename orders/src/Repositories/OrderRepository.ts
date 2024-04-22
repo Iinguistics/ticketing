@@ -6,6 +6,7 @@ import { Types } from 'mongoose';
 import OrderEntity from '../Entities/Order';
 import OrderFactory from '../Factories/OrderFactory';
 import TicketEntity from '../Entities/Ticket';
+import UpdateOrderData from './UpdateOrderData';
 
 class OrderRepository extends Repository {
 	#order;
@@ -88,14 +89,18 @@ class OrderRepository extends Repository {
 			);
 		}
 
-		const data = {
+		const data: UpdateOrderData = {
 			modified_at: Date.now(),
 			status: order.status,
 		};
 
-		document.set(data)
+		if (order.stripeId) {
+			data.stripe_id = order.stripeId;
+		}
+
+		document.set(data);
 		await document.save();
-		
+
 		order.incrementVersion();
 	}
 

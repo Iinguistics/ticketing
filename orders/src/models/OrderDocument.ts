@@ -7,6 +7,7 @@ export interface OrderDocument extends mongoose.Document {
 	expires_at: Date;
 	id: string;
 	status: OrderStatus;
+	stripe_id?: string;
 	ticket: TicketDocument;
 	user_id: string;
 	version: number;

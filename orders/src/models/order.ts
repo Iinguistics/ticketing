@@ -27,6 +27,9 @@ const orderSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		stripe_id: {
+			type: String,
+		},
 		ticket: {
 			type: mongoose.Types.ObjectId,
 			ref: 'Ticket',

@@ -5,6 +5,7 @@ class Order {
 	#expiresAt;
 	#id;
 	#status;
+	#stripeId;
 	#ticket;
 	#userId;
 	#version;
@@ -14,6 +15,7 @@ class Order {
 		this.#expiresAt = properties.expiresAt;
 		this.#id = properties.id;
 		this.#status = properties.status;
+		this.#stripeId = properties.stripeId;
 		this.#ticket = properties.ticket;
 		this.#userId = properties.userId;
 		this.#version = properties.version;
@@ -33,6 +35,14 @@ class Order {
 
 	set status(value) {
 		this.#status = value;
+	}
+
+	get stripeId() {
+		return this.#stripeId;
+	}
+
+	set stripeId(value) {
+		this.#stripeId = value;
 	}
 
 	get ticket() {

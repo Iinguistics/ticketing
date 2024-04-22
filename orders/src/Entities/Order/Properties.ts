@@ -7,6 +7,7 @@ type Properties = Readonly<{
 	expiresAt: Date;
 	id: Id;
 	status: OrderStatus;
+	stripeId?: string;
 	ticket: TicketDocument;
 	userId: Id;
 	version: number;
