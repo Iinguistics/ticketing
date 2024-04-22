@@ -12,6 +12,7 @@ import {
 import prefix from './prefix';
 
 import { Order } from '../models/order';
+import PaymentRepository from '../Repositories/PaymentRepository';
 import StripeGateway from '../Gateways/Stripe/StripeGateway';
 
 const router = express.Router();
@@ -46,10 +47,15 @@ router.post(
 			throw new BadRequestError('Cannot pay for a cancelled order');
 		}
 
-		await StripeGateway.create({
+		const payment = await StripeGateway.create({
 			amount: order.price,
 			paymentMethod: token,
-	  });
+		});
+
+		await PaymentRepository.create({
+			order_id: order.id,
+			stripe_id: payment.id,
+		});
 
 		res.status(201).send({ success: true });
 	}
