@@ -14,6 +14,8 @@ import prefix from './prefix';
 import { Order } from '../models/order';
 import PaymentRepository from '../Repositories/PaymentRepository';
 import StripeGateway from '../Gateways/Stripe/StripeGateway';
+import PaymentCreatedPublisher from '../events/publishers/PaymentCreatedPublisher';
+import { natsWrapper } from '../NatsWrapper';
 
 const router = express.Router();
 
@@ -55,6 +57,12 @@ router.post(
 		const paymentDocument = await PaymentRepository.create({
 			order_id: order.id,
 			stripe_id: stripeCharge.id,
+		});
+
+		new PaymentCreatedPublisher(natsWrapper.client).publish({
+			id: paymentDocument.id,
+			orderId: paymentDocument.order_id,
+			stripeId: paymentDocument.stripe_id,
 		});
 
 		res
