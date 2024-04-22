@@ -47,17 +47,19 @@ router.post(
 			throw new BadRequestError('Cannot pay for a cancelled order');
 		}
 
-		const payment = await StripeGateway.create({
+		const stripeCharge = await StripeGateway.create({
 			amount: order.price,
 			paymentMethod: token,
 		});
 
-		await PaymentRepository.create({
+		const paymentDocument = await PaymentRepository.create({
 			order_id: order.id,
-			stripe_id: payment.id,
+			stripe_id: stripeCharge.id,
 		});
 
-		res.status(201).send({ success: true });
+		res
+			.status(201)
+			.send({ id: paymentDocument.id, stripe_id: paymentDocument.stripe_id });
 	}
 );
 

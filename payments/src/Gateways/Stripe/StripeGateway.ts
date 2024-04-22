@@ -2,6 +2,8 @@ import { STRIPE_API_VERSION } from '../../local/config';
 import Create from './Create';
 import Stripe from 'stripe';
 
+// TODO: implement retrieve method
+
 class StripeGateWay {
 	#currency = 'usd';
 	#stripe = new Stripe(process.env.STRIPE_KEY!, {

@@ -1,5 +1,6 @@
 import { OrderStatus, createObjectId } from '@jmsgoytia-ticketing/common';
 import { Order } from '../../models/order';
+import { Payment } from '../../models/payment';
 import { userId } from '../../test/setup';
 import app from '../../app';
 import prefix from '../prefix';
@@ -7,7 +8,7 @@ import request from 'supertest';
 import StripeGateway from '../../Gateways/Stripe/StripeGateway';
 
 /** Deprecated */
-const chargeToken = 'tok_visa'
+const chargeToken = 'tok_visa';
 const price = 20;
 const randomPrice = Math.floor(Math.random() * 100000);
 
@@ -63,7 +64,7 @@ it('returns a 201 with valid inputs', async () => {
 	});
 	await order.save();
 
-	await request(app)
+	const response = await request(app)
 		.post(`${prefix}/payments`)
 		.set('Cookie', global.login(true))
 		.send({
@@ -71,6 +72,12 @@ it('returns a 201 with valid inputs', async () => {
 			order_id: order.id,
 		})
 		.expect(201);
+
+	const payment = await Payment.findById(response.body.id);
+
+	expect(payment).not.toBeNull();
+	expect(payment?.order_id).toEqual(order.id);
+	expect(payment?.stripe_id).toEqual(response.body.stripe_id);
 });
 
 it('finds charge in charge list', async () => {
