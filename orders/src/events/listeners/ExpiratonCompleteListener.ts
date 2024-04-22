@@ -24,6 +24,10 @@ class ExpirationCompleteListener extends Listener<ExpirationCompleteEvent> {
 
 		const order = await this.#getOrderById(new Id(orderId));
 
+		if (order.status === OrderStatus.Complete) {
+			return msg.ack();
+		}
+
 		order.status = OrderStatus.Cancelled;
 
 		await OrderRepository.update(order);
