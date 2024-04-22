@@ -54,7 +54,7 @@ it('returns a 400 when trying to purchase a cancelled order', async () => {
 		.expect(400);
 });
 
-it('returns a 201 with valid inputs', async () => {
+it('returns a 200 with valid inputs', async () => {
 	const order = Order.build({
 		_id: createObjectId(),
 		price: randomPrice,
@@ -71,7 +71,7 @@ it('returns a 201 with valid inputs', async () => {
 			token: 'pm_card_visa',
 			order_id: order.id,
 		})
-		.expect(201);
+		.expect(200);
 
 	const payment = await Payment.findById(response.body.id);
 
