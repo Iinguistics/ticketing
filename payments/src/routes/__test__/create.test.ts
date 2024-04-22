@@ -4,8 +4,12 @@ import { userId } from '../../test/setup';
 import app from '../../app';
 import prefix from '../prefix';
 import request from 'supertest';
+import StripeGateway from '../../Gateways/Stripe/StripeGateway';
 
+/** Deprecated */
+const chargeToken = 'tok_visa'
 const price = 20;
+const randomPrice = Math.floor(Math.random() * 100000);
 
 it('returns a 404 when purchasing an order that does not exist', async () => {
 	await request(app)
@@ -47,4 +51,35 @@ it('returns a 400 when trying to purchase a cancelled order', async () => {
 		.set('Cookie', global.login(true))
 		.send({ order_id: order.id, token: 'abc' })
 		.expect(400);
+});
+
+it('returns a 201 with valid inputs', async () => {
+	const order = Order.build({
+		_id: createObjectId(),
+		price: randomPrice,
+		status: OrderStatus.Created,
+		version: 0,
+		user_id: userId,
+	});
+	await order.save();
+
+	await request(app)
+		.post(`${prefix}/payments`)
+		.set('Cookie', global.login(true))
+		.send({
+			token: 'pm_card_visa',
+			order_id: order.id,
+		})
+		.expect(201);
+});
+
+it('finds charge in charge list', async () => {
+	const stripeCharges = await StripeGateway.list();
+
+	const stripeCharge = stripeCharges.data.find(
+		(charge) => charge.amount === randomPrice * 100
+	);
+
+	expect(stripeCharge).toBeDefined();
+	expect(stripeCharge!.currency).toEqual('usd');
 });

@@ -2,6 +2,7 @@ import { createObjectId } from '@jmsgoytia-ticketing/common';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import STRIPE_KEY from './stripe-key';
 
 declare global {
   var login: (persistUser?: boolean) => string[];
@@ -10,6 +11,8 @@ declare global {
 let mongo: any;
 
 jest.mock('../NatsWrapper');
+
+process.env.STRIPE_KEY = STRIPE_KEY;
 
 export const userId = createObjectId();
 
