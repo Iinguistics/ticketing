@@ -35,6 +35,17 @@ class StripeGateWay {
 		}
 	}
 
+	async list(
+		limit: number | undefined = 50
+	): Promise<Stripe.Response<Stripe.ApiList<Stripe.PaymentIntent>>> {
+		try {
+			return this.#stripe.paymentIntents.list({ limit });
+		} catch (error) {
+			console.error('Error retrieving charge list:', error);
+			throw error;
+		}
+	}
+
 	/** Deprecated */
 	async createCharge(data: Create) {
 		this.#stripe.charges.create({
@@ -42,17 +53,6 @@ class StripeGateWay {
 			currency: this.#currency,
 			source: data.paymentMethod,
 		});
-	}
-
-	async list(
-		limit: number | undefined = 50
-	): Promise<Stripe.Response<Stripe.ApiList<Stripe.Charge>>> {
-		try {
-			return this.#stripe.charges.list({ limit });
-		} catch (error) {
-			console.error('Error retrieving charge list:', error);
-			throw error;
-		}
 	}
 }
 
