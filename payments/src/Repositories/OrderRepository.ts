@@ -13,7 +13,7 @@ class OrderRepository extends Repository {
 	}
 
 	async create(attrs: OrderAttrs) {
-		const order = Order.build(attrs);
+		const order = this.#order.build(attrs);
 
 		await order.save();
 	}
