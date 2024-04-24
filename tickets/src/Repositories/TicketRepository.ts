@@ -22,6 +22,7 @@ class TicketRepository extends Repository {
 		const tickets = await this.#ticket
 			.find({
 				...TicketRepository._scope('notDeleted'),
+				order_id: undefined,
 			})
 			.limit(pagination.limit)
 			.skip(TicketRepository._calcSkip(pagination));
