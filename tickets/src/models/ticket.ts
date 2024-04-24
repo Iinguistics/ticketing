@@ -1,8 +1,10 @@
-import { TicketDocument } from './TicketDocument';
+import { Address, TicketDocument } from './TicketDocument';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import mongoose from 'mongoose';
 
 export interface TicketAttrs {
+	address: Address;
+	date: string;
 	price: number;
 	title: string;
 	user_id: string;
@@ -14,7 +16,29 @@ interface TicketModel extends mongoose.Model<TicketDocument> {
 
 const ticketSchema = new mongoose.Schema(
 	{
+		address: {
+			city: {
+				type: String,
+				required: true,
+			},
+			postal_code: {
+				type: String,
+				required: true,
+			},
+			state: {
+				type: String,
+				required: true,
+			},
+			street_address: {
+				type: String,
+				required: true,
+			},
+		},
 		created_at: { default: Date.now, type: Date },
+		date: {
+			type: Date,
+			required: true,
+		},
 		deleted_at: { default: null, type: Date },
 		modified_at: { default: Date.now, type: Date },
 		order_id: {
