@@ -3,7 +3,7 @@ import Router from 'next/router';
 import useRequest from '../../hooks/use-request';
 import urls from '../../api/urls';
 
-const create = () => {
+const create = ({ currentUser }) => {
 	const [title, setTitle] = useState('');
 	const [price, setPrice] = useState('');
 	const { doRequest, errors } = useRequest({
@@ -15,6 +15,10 @@ const create = () => {
 		},
 		onSuccess: () => Router.push('/'),
 	});
+
+	if (!currentUser) {
+		Router.push('/auth/login');
+	}
 
 	const onBlur = () => {
 		const value = parseFloat(price);
@@ -36,25 +40,33 @@ const create = () => {
 		<div>
 			<h1>Create a Ticket</h1>
 			<form onSubmit={handleOnSubmit}>
-				<div className='form-group'>
-					<label>Title</label>
+				<div className='mb-3'>
+					<label htmlFor='title' className='form-label'>
+						Title
+					</label>
 					<input
 						value={title}
 						onChange={(e) => setTitle(e.target.value)}
 						className='form-control'
+						id='title'
 					/>
 				</div>
-				<div className='form-group'>
-					<label>Price</label>
+				<div className='mb-3'>
+					<label htmlFor='price' className='form-label'>
+						Price
+					</label>
 					<input
 						value={price}
 						onBlur={onBlur}
 						onChange={(e) => setPrice(e.target.value)}
 						className='form-control'
+						id='price'
 					/>
 				</div>
 				{errors}
-				<button className='btn btn-primary'>Submit</button>
+				<button type='submit' className='btn btn-primary'>
+					Submit
+				</button>
 			</form>
 		</div>
 	);

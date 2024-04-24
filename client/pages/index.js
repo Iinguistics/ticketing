@@ -1,6 +1,20 @@
+import Link from 'next/link';
+import NoContent from '../components/cards/no-content';
 import urls from '../api/urls';
 
 const LandingPage = ({ currentUser, tickets }) => {
+	if (!tickets.length) {
+		return (
+			<NoContent
+				description={'There are currently no tickets available at this time'}
+				header={'Ticket listings'}
+				href={'/tickets/create'}
+				linkText={'Sell a ticket'}
+				title={'No listed tickets'}
+			/>
+		);
+	}
+
 	const ticketList = tickets.map((ticket) => {
 		return (
 			<tr key={ticket.id}>
@@ -17,7 +31,7 @@ const LandingPage = ({ currentUser, tickets }) => {
 
 	return (
 		<div>
-			<h1>Tickets</h1>
+			<h1>Tickets for sale</h1>
 			<table className='table'>
 				<thead>
 					<tr>
@@ -35,7 +49,7 @@ const LandingPage = ({ currentUser, tickets }) => {
 LandingPage.getInitialProps = async (context, client, currentUser) => {
 	const { data } = await client.get(urls.ticketSrv.tickets);
 
-	return { tickets: data };
+	return { tickets: data.tickets };
 };
 
 export default LandingPage;
