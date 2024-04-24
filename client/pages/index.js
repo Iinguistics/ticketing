@@ -6,10 +6,10 @@ const LandingPage = ({ currentUser, tickets }) => {
 	if (!tickets.length) {
 		return (
 			<NoContent
-				description={'There are currently no tickets available at this time'}
 				header={'Ticket listings'}
 				href={'/tickets/create'}
 				linkText={'Sell a ticket'}
+				text={'There are currently no tickets available at this time'}
 				title={'No listed tickets'}
 			/>
 		);
