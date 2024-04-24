@@ -15,7 +15,6 @@ class CreateController extends Controller {
 				postalCode: req.body.postal_code,
 				state: req.body.state,
 				streetAddress: req.body.street_address,
-
 			},
 			date: req.body.date,
 			description: req.body.description ?? null,

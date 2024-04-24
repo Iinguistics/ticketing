@@ -1,5 +1,6 @@
 import { natsWrapper } from '../../NatsWrapper';
 import {
+	Address,
 	BadRequestError,
 	Id,
 	NotAuthorizedError,
@@ -27,8 +28,7 @@ class UpdateInteractor extends Interactor {
 
 		UpdateInteractor.#checkTicket(ticket, userId);
 
-		ticket.price = req.price;
-		ticket.title = req.title;
+		UpdateInteractor.#updateEntity(req, ticket);
 
 		await this.#ticketRepository.update(ticket);
 
@@ -65,6 +65,19 @@ class UpdateInteractor extends Interactor {
 				`Cannot edit, ticket ID: ${ticket.id.value} is reserved`
 			);
 		}
+	}
+
+	static #updateEntity(req: UpdateRequest, ticket: Ticket): void {
+		ticket.address = new Address({
+			city: req.address.city,
+			postalCode: req.address.postalCode,
+			state: req.address.state,
+			streetAddress: req.address.streetAddress,
+		});
+		ticket.date = new Date(req.date);
+		ticket.description = req.description || null;
+		ticket.price = req.price;
+		ticket.title = req.title;
 	}
 }
 

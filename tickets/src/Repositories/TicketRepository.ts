@@ -71,6 +71,14 @@ class TicketRepository extends Repository {
 		}
 
 		const data: UpdateData = {
+			address: {
+				city: ticket.address.city,
+				postal_code: ticket.address.postalCode,
+				state: ticket.address.state,
+				street_address: ticket.address.streetAddress,
+			},
+			date: ticket.date,
+			description: ticket.description,
 			order_id: undefined,
 			modified_at: Date.now(),
 			price: ticket.price,

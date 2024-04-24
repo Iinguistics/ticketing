@@ -1,8 +1,11 @@
 import Properties from './Properties';
 
 class Ticket {
+	#address;
 	#createdAt;
+	#date;
 	#deletedAt;
+	#description;
 	#id;
 	#orderId;
 	#price;
@@ -11,14 +14,41 @@ class Ticket {
 	#version;
 
 	constructor(properties: Properties) {
+		this.#address = properties.address;
 		this.#createdAt = properties.createdAt;
+		this.#date = properties.date;
 		this.#deletedAt = properties.deletedAt ?? null;
+		this.#description = properties.description ?? null;
 		this.#id = properties.id;
 		this.#orderId = properties.orderId;
 		this.#price = properties.price;
 		this.#title = properties.title;
 		this.#userId = properties.userId;
 		this.#version = properties.version;
+	}
+
+	get address() {
+		return this.#address;
+	}
+
+	set address(value) {
+		this.#address = value;
+	}
+
+	get date() {
+		return this.#date;
+	}
+
+	set date(value) {
+		this.#date = value;
+	}
+
+	get description() {
+		return this.#description;
+	}
+
+	set description(value) {
+		this.#description = value;
 	}
 
 	get id() {
