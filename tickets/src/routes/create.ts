@@ -10,10 +10,20 @@ import prefix from './prefix';
 
 const router = express.Router();
 
+const isValidDate = (value: string) => {
+	return !isNaN(Date.parse(value));
+};
+
 router.post(
 	`${prefix}/tickets`,
 	requireAuth,
 	[
+		body('date')
+			.trim()
+			.notEmpty()
+			.withMessage('Date required')
+			.custom(isValidDate)
+			.withMessage('Invalid date'),
 		body('city').trim().notEmpty().withMessage('City required'),
 		body('description').trim().notEmpty().withMessage('Description required'),
 		body('postal_code').trim().notEmpty().withMessage('Postal code required'),
