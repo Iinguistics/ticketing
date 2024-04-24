@@ -12,6 +12,7 @@ export interface TicketDocument extends mongoose.Document {
 	created_at: Date;
 	date: Date;
 	deleted_at: Date | null;
+	description: string | null;
 	id: string;
 	modified_at: Date;
 	order_id?: string;

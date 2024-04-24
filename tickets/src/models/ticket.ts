@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 export interface TicketAttrs {
 	address: Address;
 	date: string;
+	description: string | null;
 	price: number;
 	title: string;
 	user_id: string;
@@ -40,6 +41,10 @@ const ticketSchema = new mongoose.Schema(
 			required: true,
 		},
 		deleted_at: { default: null, type: Date },
+		description: {
+			default: null,
+			type: String,
+		},
 		modified_at: { default: Date.now, type: Date },
 		order_id: {
 			type: String,

@@ -18,13 +18,13 @@ router.post(
 	`${prefix}/tickets`,
 	requireAuth,
 	[
-		body('date')
-			.trim()
-			.notEmpty()
-			.withMessage('Date required')
-			.custom(isValidDate)
-			.withMessage('Invalid date'),
 		body('city').trim().notEmpty().withMessage('City required'),
+		body('date')
+		.trim()
+		.notEmpty()
+		.withMessage('Date required')
+		.custom(isValidDate)
+		.withMessage('Invalid date'),
 		body('description').trim().notEmpty().withMessage('Description required'),
 		body('postal_code').trim().notEmpty().withMessage('Postal code required'),
 		body('price').isFloat({ gt: 0 }).withMessage('Invalid Price'),

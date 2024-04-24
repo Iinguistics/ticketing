@@ -14,8 +14,16 @@ class CreateInteractor extends Interactor {
 	}
 
 	async _execute(req: CreateRequest): Promise<CreateResponse> {
-		const { price, title, userId } = req;
+		const { address, date, description, price, title, userId } = req;
 		const ticket = await this.#ticketRepository.create({
+			address: {
+				city: address.city,
+				postal_code: address.postalCode,
+				state: address.state,
+				street_address: address.streetAddress,
+			},
+			date,
+			description,
 			price,
 			title,
 			user_id: userId,
