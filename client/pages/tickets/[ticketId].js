@@ -29,7 +29,7 @@ show.getInitialProps = async (context, client) => {
 	const { ticketId } = context.query;
 	const { data } = await client.get(`${urls.ticketSrv.show}/${ticketId}`);
 
-	return { ticket: data };
+	return { ticket: data.ticket };
 };
 
 export default show;

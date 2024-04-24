@@ -10,7 +10,7 @@ const show = ({ currentUser, order }) => {
 		url: urls.paymentsSrv.create,
 		method: 'post',
 		body: {
-			order_id: ticket.id,
+			order_id: order.id,
 		},
 		onSuccess: () => Router.push('/orders'),
 	});
@@ -55,7 +55,7 @@ show.getInitialProps = async (context, client) => {
 	const { orderId } = context.query;
 	const { data } = await client.get(`${urls.ordersSrv.show}/${orderId}`);
 
-	return { order: data };
+	return { order: data.order };
 };
 
 export default show;

@@ -16,35 +16,48 @@ const register = () => {
 		onSuccess: () => Router.push('/'),
 	});
 
-	const onSubmit = async (event) => {
+	const handleOnSubmit = async (event) => {
 		event.preventDefault();
 
 		await doRequest();
 	};
 
 	return (
-		<form onSubmit={onSubmit}>
+		<>
 			<h1>Register</h1>
-			<div className='form-group'>
-				<label>Email Address</label>
-				<input
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					className='form-control'
-				/>
-			</div>
-			<div className='form-group'>
-				<label>Password</label>
-				<input
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-					type='password'
-					className='form-control'
-				/>
-			</div>
-			{errors}
-			<button className='btn btn-primary'>Register</button>
-		</form>
+			<form onSubmit={handleOnSubmit}>
+				<div className='mb-3'>
+					<label htmlFor='email' className='form-label'>
+						Email Address
+					</label>
+					<input
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						className='form-control'
+						id='email'
+					/>
+					<div className='form-text'>
+						We'll never share your email with anyone.
+					</div>
+				</div>
+				<div className='mb-3'>
+					<label htmlFor='password' className='form-label'>
+						Password
+					</label>
+					<input
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						type='password'
+						className='form-control'
+						id='password'
+					/>
+				</div>
+				{errors}
+				<button type='submit' className='btn btn-primary'>
+					Register
+				</button>
+			</form>
+		</>
 	);
 };
 
