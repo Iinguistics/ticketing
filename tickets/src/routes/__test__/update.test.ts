@@ -1,18 +1,16 @@
 import { natsWrapper } from '../../NatsWrapper';
 import { Ticket } from '../../models/ticket';
+import { ticketData } from '../../test/createTicket';
 import app from '../../app';
 import createObjectId from '../../test/createObjectId';
 import createTicket from '../../test/createTicket';
 import prefix from '../prefix';
 import request from 'supertest';
 
-const price = 20;
-const title = 'techspo';
-
 it('returns a 401 if the user is not authenticated', async () => {
 	return request(app)
 		.put(`${prefix}/tickets/${createObjectId()}`)
-		.send({ price, title })
+		.send(ticketData)
 		.expect(401);
 });
 
@@ -20,7 +18,7 @@ it('returns a 404 if ticket is not found', async () => {
 	return request(app)
 		.put(`${prefix}/tickets/${createObjectId()}`)
 		.set('Cookie', global.login())
-		.send({ price, title })
+		.send(ticketData)
 		.expect(404);
 });
 
@@ -30,7 +28,7 @@ it('returns a 401 if the user does not own the ticket', async () => {
 	return request(app)
 		.put(`${prefix}/tickets/${response.body.id}`)
 		.set('Cookie', global.login())
-		.send({ price, title })
+		.send(ticketData)
 		.expect(401);
 });
 
@@ -39,18 +37,18 @@ it('returns a 400 if invalid title or price', async () => {
 	const response = await request(app)
 		.post(`${prefix}/tickets`)
 		.set('Cookie', cookie)
-		.send({ price, title });
+		.send(ticketData);
 
 	await request(app)
 		.put(`${prefix}/tickets/${response.body.id}`)
 		.set('Cookie', cookie)
-		.send({ price, title: '' })
+		.send({ price: ticketData.price, title: '' })
 		.expect(400);
 
 	return request(app)
 		.put(`${prefix}/tickets/${response.body.id}`)
 		.set('Cookie', cookie)
-		.send({ price: '', title })
+		.send({ price: '', title: ticketData.title })
 		.expect(400);
 });
 
@@ -59,14 +57,14 @@ it('updates the ticket when provided valid inputs', async () => {
 	const response = await request(app)
 		.post(`${prefix}/tickets`)
 		.set('Cookie', cookie)
-		.send({ price, title });
+		.send(ticketData);
 
 	const ticketId = response.body.id;
 
 	await request(app)
 		.put(`${prefix}/tickets/${ticketId}`)
 		.set('Cookie', cookie)
-		.send({ price: 30, title: 'new title' })
+		.send({ ...ticketData, price: 30, title: 'new title' })
 		.expect(200);
 
 	const ticketResponse = await request(app)
@@ -83,7 +81,7 @@ it('rejects the update if the ticket is reserved', async () => {
 	const response = await request(app)
 		.post(`${prefix}/tickets`)
 		.set('Cookie', cookie)
-		.send({ price, title });
+		.send(ticketData);
 
 	const ticketId = response.body.id;
 
@@ -94,13 +92,13 @@ it('rejects the update if the ticket is reserved', async () => {
 	await request(app)
 		.put(`${prefix}/tickets/${ticketId}`)
 		.set('Cookie', cookie)
-		.send({ price: 30, title: 'new title' })
+		.send({ ...ticketData, title: 'new title' })
 		.expect(400);
 
 	const ticketResponse = await request(app)
 		.get(`${prefix}/tickets/${ticketId}`)
 		.send();
 
-	expect(ticketResponse.body.ticket.price).toEqual(price);
+	expect(ticketResponse.body.ticket.price).toEqual(ticketData.price);
 	expect(ticketResponse.body.ticket.title).not.toEqual('new title');
 });

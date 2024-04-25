@@ -16,6 +16,14 @@ const setup = async () => {
 	const listener = new OrderCreatedListener(natsWrapper.client);
 
 	const ticket = Ticket.build({
+		address: {
+			city: 'San Diego',
+			postal_code: '92071',
+			state: 'ca',
+			street_address: '1234',
+		},
+		date: '2024-04-25T12:00:00',
+		description: null,
 		price,
 		title,
 		user_id: createObjectId(),
