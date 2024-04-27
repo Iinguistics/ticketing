@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import NoContent from '../components/cards/no-content';
+import Table from '../components/table';
 import TicketService from '../api/services/reads/TicketService';
 
 const LandingPage = ({ tickets }) => {
@@ -15,7 +16,9 @@ const LandingPage = ({ tickets }) => {
 		);
 	}
 
-	const ticketList = tickets.map((ticket) => (
+	const headerList = ['Title', 'Date', 'Price', 'View'];
+
+	const bodyList = tickets.map((ticket) => (
 		<tr key={ticket.id}>
 			<td>{ticket.title}</td>
 			<td>{ticket.date}</td>
@@ -29,20 +32,12 @@ const LandingPage = ({ tickets }) => {
 	));
 
 	return (
-		<div>
-			<h1>Tickets for sale</h1>
-			<table className='table table-striped'>
-				<thead>
-					<tr>
-						<th>Title</th>
-						<th>Date</th>
-						<th>Price</th>
-						<th>View</th>
-					</tr>
-				</thead>
-				<tbody>{ticketList}</tbody>
-			</table>
-		</div>
+		<Table
+			body={bodyList}
+			headers={headerList}
+			striped={true}
+			title='Tickets for sale'
+		/>
 	);
 };
 
