@@ -1,4 +1,5 @@
 import Router from 'next/router';
+import TicketService from '../../api/services/reads/TicketService';
 import useRequest from '../../hooks/use-request';
 import urls from '../../api/urls';
 
@@ -25,11 +26,10 @@ const show = ({ ticket }) => {
 	);
 };
 
-show.getInitialProps = async (context, client) => {
+show.getInitialProps = async (context, httpClient) => {
 	const { ticketId } = context.query;
-	const { data } = await client.get(`${urls.ticketSrv.show}/${ticketId}`);
 
-	return { ticket: data.ticket };
+	return new TicketService({ httpClient }).show(ticketId);
 };
 
 export default show;

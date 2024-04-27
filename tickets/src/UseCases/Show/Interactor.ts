@@ -28,11 +28,23 @@ class ShowInteractor extends Interactor {
 
 	#mapToResponse(ticket: TicketEntity): Ticket {
 		return {
+			address: ShowInteractor.#mapToAddress(ticket.address),
 			createdAt: ticket.createdAt,
+			date: ticket.date,
+			description: ticket.description,
 			id: ticket.id.value,
 			price: ticket.price,
 			title: ticket.title,
 			userId: ticket.userId.value,
+		};
+	}
+
+	static #mapToAddress(address: TicketEntity['address']): Ticket['address'] {
+		return {
+			city: address.city,
+			postalCode: address.postalCode,
+			state: address.state,
+			streetAddress: address.streetAddress,
 		};
 	}
 }

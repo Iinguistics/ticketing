@@ -5,9 +5,9 @@ import urls from '../api/urls';
 
 const AppComponent = ({ Component, pageProps, currentUser }) => {
 	return (
-		<div>
+		<div className='container'>
 			<Header currentUser={currentUser} />
-			<div className='container my-4'>
+			<div className='my-4'>
 				<Component {...pageProps} currentUser={currentUser} />
 			</div>
 		</div>

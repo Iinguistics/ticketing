@@ -9,7 +9,11 @@ const camelToSnake = (obj: any): { [key: string]: any } => {
 		obj,
 		(result: any, value: any, key: string) => {
 			const newKey = _.snakeCase(key);
-			result[newKey] = camelToSnake(value);
+			if (typeof value === 'object' && !(value instanceof Date)) {
+				result[newKey] = camelToSnake(value);
+			} else {
+				result[newKey] = value;
+			}
 			return result;
 		},
 		Array.isArray(obj) ? [] : {}

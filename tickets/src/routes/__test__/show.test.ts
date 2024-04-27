@@ -1,10 +1,9 @@
 import app from '../../app';
+import { ticketData } from '../../test/createTicket';
 import createObjectId from '../../test/createObjectId';
+import createTicket from '../../test/createTicket';
 import prefix from '../prefix';
 import request from 'supertest';
-
-const price = 20;
-const title = 'techspo';
 
 it('returns a 400 if the ticket id is not a valid ObjectId', async () => {
 	await request(app)
@@ -23,11 +22,7 @@ it('returns a 404 if ticket is not found', async () => {
 });
 
 it('returns the ticket by id', async () => {
-	const createdTicket = await request(app)
-		.post(`${prefix}/tickets`)
-		.set('Cookie', global.login())
-		.send({ price, title })
-		.expect(200);
+	const createdTicket = await createTicket();
 
 	const ticketId = createdTicket.body.id;
 
@@ -38,6 +33,6 @@ it('returns the ticket by id', async () => {
 		.expect(200);
 
 	expect(ticket.body.ticket.id).toEqual(ticketId);
-	expect(ticket.body.ticket.price).toEqual(price);
-	expect(ticket.body.ticket.title).toEqual(title);
+	expect(ticket.body.ticket.price).toEqual(ticketData.price);
+	expect(ticket.body.ticket.title).toEqual(ticketData.title);
 });

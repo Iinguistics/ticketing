@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import NoContent from '../components/cards/no-content';
-import urls from '../api/urls';
+import TicketService from '../api/services/reads/TicketService';
 
-const LandingPage = ({ currentUser, tickets }) => {
+const LandingPage = ({ tickets }) => {
 	if (!tickets.length) {
 		return (
 			<NoContent
@@ -15,27 +15,27 @@ const LandingPage = ({ currentUser, tickets }) => {
 		);
 	}
 
-	const ticketList = tickets.map((ticket) => {
-		return (
-			<tr key={ticket.id}>
-				<td>{ticket.title}</td>
-				<td>{ticket.price}</td>
-				<td>
-					<Link href='/tickets/[ticketId]' as={`/tickets/${ticket.id}`}>
-						View
-					</Link>
-				</td>
-			</tr>
-		);
-	});
+	const ticketList = tickets.map((ticket) => (
+		<tr key={ticket.id}>
+			<td>{ticket.title}</td>
+			<td>{ticket.date}</td>
+			<td>{ticket.price}</td>
+			<td>
+				<Link href='/tickets/[ticketId]' as={`/tickets/${ticket.id}`}>
+					See Details
+				</Link>
+			</td>
+		</tr>
+	));
 
 	return (
 		<div>
 			<h1>Tickets for sale</h1>
-			<table className='table'>
+			<table className='table table-striped'>
 				<thead>
 					<tr>
 						<th>Title</th>
+						<th>Date</th>
 						<th>Price</th>
 						<th>View</th>
 					</tr>
@@ -46,10 +46,8 @@ const LandingPage = ({ currentUser, tickets }) => {
 	);
 };
 
-LandingPage.getInitialProps = async (context, client, currentUser) => {
-	const { data } = await client.get(urls.ticketSrv.tickets);
-
-	return { tickets: data.tickets };
+LandingPage.getInitialProps = async (context, httpClient) => {
+	return new TicketService({ httpClient }).getTickets();
 };
 
 export default LandingPage;

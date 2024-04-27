@@ -5,20 +5,15 @@ import {
 import { Message } from 'node-nats-streaming';
 import { natsWrapper } from '../../../NatsWrapper';
 import { Ticket } from '../../../models/ticket';
+import buildTicket from '../../../test/buildTicket';
 import OrderCancelledListener from '../OrderCancelledListener';
 
-const price = 20;
-const title = 'concert';
 const orderId = createObjectId();
 
 const setup = async () => {
 	const listener = new OrderCancelledListener(natsWrapper.client);
 
-	const ticket = Ticket.build({
-		price,
-		title,
-		user_id: createObjectId(),
-	});
+	const ticket = await buildTicket();
 
 	ticket.set({ order_id: createObjectId() });
 
