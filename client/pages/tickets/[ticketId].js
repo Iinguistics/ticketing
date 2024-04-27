@@ -1,3 +1,4 @@
+import Card from '../../components/cards/card';
 import Router from 'next/router';
 import TicketService from '../../api/services/reads/TicketService';
 import useRequest from '../../hooks/use-request';
@@ -15,14 +16,16 @@ const show = ({ ticket }) => {
 	});
 
 	return (
-		<div>
-			<h1>{ticket.title}</h1>
-			<h5>Price: {ticket.price}</h5>
-			{errors}
-			<button className='btn btn-primary' onClick={() => doRequest()}>
-				Reserve
-			</button>
-		</div>
+		<Card
+			title={ticket.title}
+			price={ticket.price}
+			subtitle={ticket.date}
+			address={ticket.address}
+			text={ticket.description}
+			posted={ticket.createdAt}
+			buttonText={'Reserve'}
+			callback={doRequest}
+		/>
 	);
 };
 

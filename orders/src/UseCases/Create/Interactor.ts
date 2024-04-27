@@ -50,8 +50,8 @@ class CreateInteractor extends Interactor {
 			id: order.id.value,
 			status: order.status,
 			ticket: {
-				id: order.ticket.id,
-				price: order.ticket.price,
+				id: ticket.id.value,
+				price: ticket.price,
 			},
 			userId: order.userId.value,
 			version: order.version,
