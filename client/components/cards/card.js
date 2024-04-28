@@ -6,7 +6,6 @@ const card = ({
 	subtitle,
 	address,
 	text,
-	postedData,
 	buttonText,
 	callback,
 }) => {

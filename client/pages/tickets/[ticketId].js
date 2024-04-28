@@ -22,7 +22,6 @@ const show = ({ ticket }) => {
 			subtitle={ticket.date}
 			address={ticket.address}
 			text={ticket.description}
-			posted={ticket.createdAt}
 			buttonText={'Reserve'}
 			callback={doRequest}
 		/>
