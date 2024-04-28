@@ -1,4 +1,4 @@
-import { BadRequestError, CustomError } from '@jmsgoytia-ticketing/common';
+import { CustomError } from '@jmsgoytia-ticketing/common';
 import { Request, Response } from 'express';
 import Presenter from '../Presenters/Presenter';
 
@@ -14,10 +14,10 @@ abstract class Interactor {
 			await this.#handleRequest(request, httpRequest, httpResponse);
 		} catch (exception) {
 			if (exception instanceof CustomError) {
-				throw exception;
+				httpResponse.status(exception.statusCode).send(exception.message);
 			} else {
 				console.error(exception);
-				throw new BadRequestError('An unexpected error has occurred');
+				httpResponse.status(400).send('An unexpected error has occurred');
 			}
 		}
 	}
