@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import Table from '../../components/table';
 import urls from '../../api/urls';
 import NoContent from '../../components/cards/no-content';
 
@@ -12,14 +14,27 @@ const orders = ({ orders }) => {
 		);
 	}
 
+	const headerList = ['Title', 'Status', 'View'];
+
+	const bodyList = orders.map((order) => (
+		<tr key={order.id}>
+			<td>{order.ticket_title}</td>
+			<td>{order.status}</td>
+			<td>
+				<Link className='nav-link text-primary' href={`/orders/${order.id}`}>
+					View Details
+				</Link>
+			</td>
+		</tr>
+	));
+
 	return (
-		<ul>
-			{orders.map((order) => (
-				<li key={order.id}>
-					{order.ticket_title} - {order.status}
-				</li>
-			))}
-		</ul>
+		<Table
+			body={bodyList}
+			headers={headerList}
+			striped={true}
+			title='My Orders'
+		/>
 	);
 };
 
