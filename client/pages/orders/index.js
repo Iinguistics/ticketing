@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import OrderService from '../../api/services/reads/OrderService';
 import Table from '../../components/table';
 import urls from '../../api/urls';
 import NoContent from '../../components/cards/no-content';
@@ -18,7 +19,7 @@ const orders = ({ orders }) => {
 
 	const bodyList = orders.map((order) => (
 		<tr key={order.id}>
-			<td>{order.ticket_title}</td>
+			<td>{order.ticketTitle}</td>
 			<td>{order.status}</td>
 			<td>
 				<Link className='nav-link text-primary' href={`/orders/${order.id}`}>
@@ -38,10 +39,8 @@ const orders = ({ orders }) => {
 	);
 };
 
-orders.getInitialProps = async (context, client) => {
-	const { data } = await client.get(`${urls.ordersSrv.orders}`);
-
-	return { orders: data.orders };
+orders.getInitialProps = async (context, httpClient) => {
+	return new OrderService({ httpClient }).getOrders();
 };
 
 export default orders;

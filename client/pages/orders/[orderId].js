@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { STRIPE_CHECKOUT_KEY } from '../../config/stripe';
+import OrderService from '../../api/services/reads/OrderService';
 import StripeCheckout from 'react-stripe-checkout';
 import useRequest from '../../hooks/use-request';
 import urls from '../../api/urls';
@@ -18,7 +19,7 @@ const show = ({ currentUser, order }) => {
 
 	useEffect(() => {
 		const findTimeLeft = () => {
-			const msLeft = new Date(order.expires_at) - new Date();
+			const msLeft = new Date(order.expiresAt) - new Date();
 			setTimeLeft(Math.round(msLeft / 1000));
 		};
 
@@ -41,8 +42,8 @@ const show = ({ currentUser, order }) => {
 	return (
 		<div>
 			<h5>Time left to pay: {timeLeft} seconds</h5>
-			<p className='text-muted'>{order.ticket_title}</p>
-			<p className='text-muted'>${order.ticket_price}</p>
+			<p className='text-muted'>{order.ticketTitle}</p>
+			<p className='text-muted'>${order.ticketPrice}</p>
 			<StripeCheckout
 				amount={order.ticket_price * 100}
 				email={currentUser.email}
@@ -54,11 +55,9 @@ const show = ({ currentUser, order }) => {
 	);
 };
 
-show.getInitialProps = async (context, client) => {
+show.getInitialProps = async (context, httpClient) => {
 	const { orderId } = context.query;
-	const { data } = await client.get(`${urls.ordersSrv.show}/${orderId}`);
-
-	return { order: data.order };
+	return new OrderService({ httpClient }).getById(orderId);
 };
 
 export default show;
