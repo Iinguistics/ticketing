@@ -25,9 +25,12 @@ function TicketModal({
 						<h6 className='text-muted'>${ticket.price}</h6>
 						<p>Event on: {ticket.date}</p>
 						<p>{ticket.address}</p>
-						{ticket.description
-							? ticket.description
-							: 'No description provided'}
+						<p>
+							{ticket.description
+								? ticket.description
+								: 'No description provided'}
+						</p>
+						<p className='small'>Listed for sale on: {ticket.createdAt}</p>
 					</div>
 					<div className='modal-footer'>
 						<button
