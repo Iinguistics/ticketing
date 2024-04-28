@@ -44,7 +44,7 @@ const show = ({ currentUser, order }) => {
 				amount={order.ticket_price * 100}
 				email={currentUser.email}
 				token={(token) => doRequest({ token: token.id })}
-				stripeKey='pk_test_51P84psCvkeXQsMWcuLMZ3miLHpwTnKPDiFswmRJrgcuEytyvScuWfXqN3ClL0BDz7lu7Ur7NPOpQABpGjRpYJ05z00YSIzDhBL'
+				stripeKey={process.env.STRIPE_CHECKOUT_KEY}
 			/>
 			{errors}
 		</div>

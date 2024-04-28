@@ -15,6 +15,12 @@ spec:
       containers:
         - name: client
           image: jamesgoytia/ticketing-client
+          env:
+            - name: STRIPE_CHECKOUT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-checkout-secret
+                  key: STRIPE_CHECKOUT_KEY
 ---
 apiVersion: v1
 kind: Service
