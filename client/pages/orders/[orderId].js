@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { STRIPE_CHECKOUT_KEY } from '../../config/stripe';
 import StripeCheckout from 'react-stripe-checkout';
 import useRequest from '../../hooks/use-request';
 import urls from '../../api/urls';
@@ -44,7 +45,7 @@ const show = ({ currentUser, order }) => {
 				amount={order.ticket_price * 100}
 				email={currentUser.email}
 				token={(token) => doRequest({ token: token.id })}
-				stripeKey={process.env.STRIPE_CHECKOUT_KEY}
+				stripeKey={STRIPE_CHECKOUT_KEY}
 			/>
 			{errors}
 		</div>

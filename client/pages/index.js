@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import TicketModal from '../components/modals/ticket-modal';
 import NoContent from '../components/cards/no-content';
+import Router from 'next/router';
 import Table from '../components/table';
 import TicketService from '../api/services/reads/TicketService';
 import useRequest from '../hooks/use-request';
