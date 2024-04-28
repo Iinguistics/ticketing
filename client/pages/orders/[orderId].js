@@ -41,6 +41,7 @@ const show = ({ currentUser, order }) => {
 	return (
 		<div>
 			<h5>Time left to pay: {timeLeft} seconds</h5>
+			<p className='text-muted'>{order.ticket_title}</p>
 			<p className='text-muted'>${order.ticket_price}</p>
 			<StripeCheckout
 				amount={order.ticket_price * 100}
