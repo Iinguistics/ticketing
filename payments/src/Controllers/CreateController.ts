@@ -12,6 +12,7 @@ class CreateController extends Controller {
 		return {
 			orderId: req.body.order_id,
 			token: req.body.token,
+			userEmail: req.currentUser!.email,
 			userId: req.currentUser!.id,
 		};
 	}

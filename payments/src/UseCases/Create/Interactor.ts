@@ -44,6 +44,7 @@ class CreateInteractor extends Interactor {
 		});
 
 		new PaymentCreatedPublisher(natsWrapper.client).publish({
+			email: req.userEmail,
 			id: paymentDocument.id,
 			orderId: paymentDocument.order_id,
 			stripeId: paymentDocument.stripe_id,
