@@ -7,7 +7,7 @@ import prefix from '../prefix';
 import request from 'supertest';
 import StripeGateway from '../../Gateways/Stripe/StripeGateway';
 
-/** Deprecated */
+const intentToken = 'pm_card_visa';
 const chargeToken = 'tok_visa';
 const price = 20;
 const randomPrice = Math.floor(Math.random() * 100000);
@@ -68,7 +68,7 @@ it('returns a 200 with valid inputs', async () => {
 		.post(`${prefix}/payments`)
 		.set('Cookie', global.login(true))
 		.send({
-			token: 'pm_card_visa',
+			token: chargeToken,
 			order_id: order.id,
 		})
 		.expect(200);

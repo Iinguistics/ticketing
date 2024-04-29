@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import OrderService from '../../api/services/reads/OrderService';
 import Table from '../../components/table';
-import urls from '../../api/urls';
 import NoContent from '../../components/cards/no-content';
 
 const orders = ({ orders }) => {

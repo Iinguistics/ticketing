@@ -8,7 +8,7 @@ class StripeGateWay {
 		apiVersion: STRIPE_API_VERSION,
 	});
 
-	async create(
+	async createIntent(
 		data: Create,
 		returnUrl?: string
 	): Promise<Stripe.PaymentIntent> {
@@ -33,7 +33,7 @@ class StripeGateWay {
 		}
 	}
 
-	async list(
+	async listIntents(
 		limit: number | undefined = 50
 	): Promise<Stripe.Response<Stripe.ApiList<Stripe.PaymentIntent>>> {
 		try {
@@ -53,13 +53,23 @@ class StripeGateWay {
 		}
 	}
 
-	/** Deprecated */
-	async createCharge(data: Create) {
-		this.#stripe.charges.create({
+	async create(data: Create) {
+		return this.#stripe.charges.create({
 			amount: data.amount * 100,
 			currency: this.#currency,
 			source: data.paymentMethod,
 		});
+	}
+
+	async list(
+		limit: number | undefined = 50
+	): Promise<Stripe.ApiListPromise<Stripe.Charge>> {
+		try {
+			return this.#stripe.charges.list({ limit });
+		} catch (error) {
+			console.error('Error retrieving charge list:', error);
+			throw error;
+		}
 	}
 }
 

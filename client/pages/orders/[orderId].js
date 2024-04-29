@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { STRIPE_CHECKOUT_KEY } from '../../config/stripe';
 import OrderService from '../../api/services/reads/OrderService';
+import Router from 'next/router';
 import StripeCheckout from 'react-stripe-checkout';
 import useRequest from '../../hooks/use-request';
 import urls from '../../api/urls';
@@ -18,6 +19,10 @@ const show = ({ currentUser, order }) => {
 	});
 
 	useEffect(() => {
+		if (order.status === 'complete') {
+			return;
+		}
+
 		const findTimeLeft = () => {
 			const msLeft = new Date(order.expiresAt) - new Date();
 			setTimeLeft(Math.round(msLeft / 1000));
@@ -31,7 +36,18 @@ const show = ({ currentUser, order }) => {
 		};
 	}, []);
 
-	if (timeLeft < 0) {
+	if (order.status === 'complete') {
+		return (
+			<div>
+				<h5>Order is completed</h5>
+				<p>{order.ticketTitle}</p>
+				<p>Price paid: ${order.ticketPrice}</p>
+				<p>Check your email for further details and your ticket!</p>
+			</div>
+		);
+	}
+
+	if (timeLeft <= 0) {
 		return (
 			<div>
 				<h5>Order reservation has expired</h5>
