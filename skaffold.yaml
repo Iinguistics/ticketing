@@ -55,3 +55,11 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+   - image: jamesgoytia/ticketing-mailing
+      context: mailing
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
