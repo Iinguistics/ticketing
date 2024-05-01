@@ -9,7 +9,8 @@ To run the app:
 - kubectl create secret generic {secretKeyRef name} --from-literal={name}={value}
 
 The Ingress host is set to ticketing.dev, update this to your desired host in your etc/hosts file.
-Will need to add if not already present: 127.0.0.1 kubernetes.docker.internal
+Will need to add if not already present: 127.0.0.1 kubernetes.docker.internal.
+Install Ingress-Nginx: https://kubernetes.github.io/ingress-nginx/deploy/
 
 To run tests:
 
