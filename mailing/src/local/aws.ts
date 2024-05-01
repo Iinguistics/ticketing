@@ -6,6 +6,6 @@ AWS.config.update({
 	region: 'us-east-2',
 });
 
-const sqs = new AWS.SQS({ apiVersion: '2012-10-17' });
+const sqs = new AWS.SQS({ apiVersion: '2012-11-05' });
 
 export { sqs };

@@ -1,4 +1,4 @@
-import PaymentCreatedListener from './paymentCreatedListener';
+import PaymentCreatedListener from './PaymentCreatedListener'
 
 const listeners = [PaymentCreatedListener];
 
