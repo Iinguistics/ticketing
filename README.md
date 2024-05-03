@@ -17,4 +17,4 @@ To run tests:
 
 - cd into a srv & run npm test
 
-![Image Description](https://i.ibb.co/Km0nLJt/Screen-Shot-2024-05-01-at-2-36-58-PM.png)
+![diagram of architecture](https://i.ibb.co/Km0nLJt/Screen-Shot-2024-05-01-at-2-36-58-PM.png)
