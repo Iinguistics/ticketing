@@ -1,5 +1,5 @@
+import { Interactor } from '@jmsgoytia-ticketing/common';
 import { Request, Response } from 'express';
-import Interactor from '../UseCases/Interactor';
 
 abstract class Controller {
 	#interactor: Interactor;

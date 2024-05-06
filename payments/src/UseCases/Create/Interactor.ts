@@ -1,15 +1,15 @@
 import {
 	BadRequestError,
 	Id,
+	Interactor,
 	NotAuthorizedError,
 	NotFoundError,
+	OkHttpPresenter,
 	OrderStatus,
 } from '@jmsgoytia-ticketing/common';
 import { natsWrapper } from '../../NatsWrapper';
 import CreateRequest from './CreateRequest';
 import CreateResponse from './CreateResponse';
-import Interactor from '../Interactor';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import Order from '../../Entities/Order';
 import OrderRepository from '../../Repositories/OrderRepository';
 import PaymentCreatedPublisher from '../../events/publishers/PaymentCreatedPublisher';
