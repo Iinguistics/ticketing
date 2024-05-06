@@ -1,6 +1,7 @@
-import { BadRequestError, CustomError } from '@jmsgoytia-ticketing/common';
+import { CustomError } from '../errors/CustomError';
 import { Request, Response } from 'express';
 import Presenter from '../Presenters/Presenter';
+
 abstract class Interactor {
 	#presenter;
 
@@ -15,7 +16,8 @@ abstract class Interactor {
 			if (exception instanceof CustomError) {
 				httpResponse.status(exception.statusCode).send(exception.message);
 			} else {
-				throw new BadRequestError('An unexpected error has occurred');
+				console.error(exception);
+				httpResponse.status(400).send('An unexpected error has occurred');
 			}
 		}
 	}

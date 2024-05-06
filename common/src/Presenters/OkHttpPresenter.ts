@@ -1,5 +1,5 @@
-import { camelToSnake } from '@jmsgoytia-ticketing/common'
 import { Response } from 'express';
+import camelToSnake from '../utils/camelToSnake';
 import HttpPresenter from './Presenter';
 
 class OkHttpPresenter extends HttpPresenter {

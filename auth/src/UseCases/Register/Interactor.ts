@@ -1,9 +1,11 @@
-import { BadRequestError } from '@jmsgoytia-ticketing/common';
+import {
+	BadRequestError,
+	Interactor,
+	OkHttpPresenter,
+} from '@jmsgoytia-ticketing/common';
 import { Request } from 'express';
 import Email from '../../ValueObjects/Email';
-import Interactor from '../../UseCase/Interactor';
 import jwt from 'jsonwebtoken';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import RegisterRequest from './RegisterRequest';
 import RegisterResponse from './RegisterResponse';
 import UserRepository from '../../Repositories/UserRepository';

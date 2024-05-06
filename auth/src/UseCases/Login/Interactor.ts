@@ -1,11 +1,13 @@
 import { Request } from 'express';
 import { UserDocument } from '../../models/UserDocument';
 
-import { BadRequestError } from '@jmsgoytia-ticketing/common';
+import {
+	BadRequestError,
+	Interactor,
+	OkHttpPresenter,
+} from '@jmsgoytia-ticketing/common';
 import Email from '../../ValueObjects/Email';
-import Interactor from '../../UseCase/Interactor';
 import jwt from 'jsonwebtoken';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import LoginRequest from './LoginRequest';
 import LoginResponse from './LoginResponse';
 import Password from '../../helpers/password';
