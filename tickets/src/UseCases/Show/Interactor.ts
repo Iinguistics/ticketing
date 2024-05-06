@@ -1,6 +1,9 @@
-import { Id, NotFoundError } from '@jmsgoytia-ticketing/common';
-import Interactor from '../../UseCase/Interactor';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
+import {
+	Id,
+	Interactor,
+	NotFoundError,
+	OkHttpPresenter,
+} from '@jmsgoytia-ticketing/common';
 import ShowRequest from './ShowRequest';
 import ShowResponse from './ShowResponse';
 import Ticket from '../../types/Ticket';

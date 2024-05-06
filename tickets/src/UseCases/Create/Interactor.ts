@@ -1,8 +1,7 @@
+import { Interactor, OkHttpPresenter } from '@jmsgoytia-ticketing/common';
 import { natsWrapper } from '../../NatsWrapper';
 import CreateRequest from './CreateRequest';
 import CreateResponse from './CreateResponse';
-import Interactor from '../../UseCase/Interactor';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import TicketCreatedPublisher from '../../events/publishers/TicketCreatedPublisher';
 import TicketRepository from '../../Repositories/TicketRepository';
 

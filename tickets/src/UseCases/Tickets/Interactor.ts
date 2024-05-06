@@ -1,9 +1,8 @@
+import { Interactor, OkHttpPresenter } from '@jmsgoytia-ticketing/common';
 import Ticket from '../../types/Ticket';
 import TicketEntity from '../../Entities/Ticket';
 import TicketsRequest from './TicketsRequest';
 import TicketsResponse from './TicketsResponse';
-import Interactor from '../../UseCase/Interactor';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import TicketRepository from '../../Repositories/TicketRepository';
 
 class TicketsInteractor extends Interactor {

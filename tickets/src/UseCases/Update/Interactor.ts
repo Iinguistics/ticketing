@@ -3,11 +3,11 @@ import {
 	Address,
 	BadRequestError,
 	Id,
+	Interactor,
 	NotAuthorizedError,
 	NotFoundError,
+	OkHttpPresenter,
 } from '@jmsgoytia-ticketing/common';
-import Interactor from '../../UseCase/Interactor';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import Ticket from '../../Entities/Ticket';
 import TicketUpdatedPublisher from '../../events/publishers/TicketUpdatedPublisher';
 import TicketRepository from '../../Repositories/TicketRepository';
