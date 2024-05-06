@@ -1,10 +1,8 @@
-import { Id } from '@jmsgoytia-ticketing/common';
-import Interactor from '../../UseCases/Interactor';
+import { Id, Interactor, OkHttpPresenter } from '@jmsgoytia-ticketing/common';
 import Order from '../../types/Order';
 import OrderEntity from '../../Entities/Order/Order';
 import OrdersRequest from './OrdersRequest';
 import OrdersResponse from './OrdersResponse';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import OrderRepository from '../../Repositories/OrderRepository';
 
 class OrdersInteractor extends Interactor {

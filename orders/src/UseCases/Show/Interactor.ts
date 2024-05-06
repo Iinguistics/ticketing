@@ -1,6 +1,10 @@
-import { Id, NotAuthorizedError, NotFoundError } from '@jmsgoytia-ticketing/common';
-import Interactor from '../Interactor';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
+import {
+	Id,
+	Interactor,
+	NotAuthorizedError,
+	NotFoundError,
+	OkHttpPresenter,
+} from '@jmsgoytia-ticketing/common';
 import Order from '../../types/Order';
 import OrderEntity from '../../Entities/Order';
 import OrderRepository from '../../Repositories/OrderRepository';
@@ -22,7 +26,7 @@ class ShowInteractor extends Interactor {
 			throw new NotFoundError();
 		}
 
-		if(!order.userId.equals(userId)){
+		if (!order.userId.equals(userId)) {
 			throw new NotAuthorizedError();
 		}
 

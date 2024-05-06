@@ -1,12 +1,12 @@
 import {
 	Id,
+	Interactor,
+	OkHttpPresenter,
 	OrderStatus,
 	NotAuthorizedError,
 	NotFoundError,
 } from '@jmsgoytia-ticketing/common';
 import { natsWrapper } from '../../NatsWrapper';
-import Interactor from '../Interactor';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import OrderRepository from '../../Repositories/OrderRepository';
 import CancelRequest from './CancelRequest';
 import CancelResponse from './CancelResponse';

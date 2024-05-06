@@ -1,15 +1,15 @@
 import {
 	BadRequestError,
 	Id,
+	Interactor,
 	NotFoundError,
+	OkHttpPresenter,
 	OrderStatus,
 } from '@jmsgoytia-ticketing/common';
 import { EXPIRATION_WINDOW_SECONDS } from '../../local/config';
 import { natsWrapper } from '../../NatsWrapper';
 import CreateRequest from './CreateRequest';
 import CreateResponse from './CreateResponse';
-import Interactor from '../../UseCases/Interactor';
-import OkHttpPresenter from '../../Presenters/OkPresenter';
 import OrderCreatedPublisher from '../../events/publishers/OrderCreatedPublisher';
 import OrderRepository from '../../Repositories/OrderRepository';
 import TicketRepository from '../../Repositories/TicketRepository';
